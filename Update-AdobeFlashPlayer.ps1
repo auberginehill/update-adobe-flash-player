@@ -690,7 +690,7 @@ If ((Test-Path $uninstaller_save_location) -eq $true) {
     (3) Exit all browsers and other programs that use Flash, including AOL Instant Messenger, Yahoo Messenger, MSN Messenger, or other Messengers
 #>
 
-Write-Verbose 'Stopping Flash-related processess...' -verbose
+Write-Verbose 'Stopping Flash-related processes...' -verbose
 
 Stop-Process -ProcessName '*messenger*' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'FlashPlayer*' -ErrorAction SilentlyContinue -Force
