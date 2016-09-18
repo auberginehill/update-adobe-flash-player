@@ -388,7 +388,7 @@
 
 <table>
     <tr>
-        <th><img class="emoji" title="www" alt="www" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f310.png"></th>
+        <th>:globe_with_meridians:</th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">Script Homepage</a></td>
     </tr>
     <tr>
