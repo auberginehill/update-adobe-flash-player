@@ -53,15 +53,15 @@
                 </tr>
                 <tr>
                     <td style="padding:6px">Bob Ross:</td>
-                    <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/6128.aspx">Automated Adobe Flash Player Maintenance PowerScript for Public Computing Environment</a></td>
+                    <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/6128.aspx">Automated Adobe Flash Player Maintenance PowerScript for Public Computing Environment</a> (or one of the <a href="https://web.archive.org/web/20150818075129/http://powershell.com/cs/forums/t/6128.aspx">archive.org versions</a>)</td>
                 </tr>
                 <tr>
                     <td style="padding:6px">ps1:</td> 
-                    <td style="padding:6px"><a href="http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">Test Internet connection</a></td>
+                    <td style="padding:6px"><a href="http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">Test Internet connection</a> (or one of the <a href="https://web.archive.org/web/20110612212629/http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">archive.org versions</a>)</td>
                 </tr>
                 <tr>
                     <td style="padding:6px">Tobias Weltner:</td> 
-                    <td style="padding:6px"><a href="http://powershell.com/cs/PowerTips_Monthly_Volume_8.pdf#IDERA-1702_PS-PowerShellMonthlyTipsVol8-jan2014">PowerTips Monthly vol 8 January 2014</a></td>
+                    <td style="padding:6px"><a href="http://powershell.com/cs/PowerTips_Monthly_Volume_8.pdf#IDERA-1702_PS-PowerShellMonthlyTipsVol8-jan2014">PowerTips Monthly vol 8 January 2014</a> (or one of the <a href="https://web.archive.org/web/20150110213108/http://powershell.com/cs/media/p/30542.aspx">archive.org versions</a>)</td>
                 </tr>
                 <tr>
                     <td style="padding:6px">alejandro5042:</td> 
@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <td style="padding:6px">lamaar75:</td> 
-                    <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/9685.aspx">Creating a Menu</a></td>
+                    <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/9685.aspx">Creating a Menu</a> (or one of the <a href="https://web.archive.org/web/20150910111758/http://powershell.com/cs/forums/t/9685.aspx">archive.org versions</a>)</td>
                 </tr>
             </table>
         </td>
@@ -279,7 +279,7 @@
                            <li>Right click on Computer and click on Properties (Or select Start → Control Panel → System). In the resulting window with the basic information about the computer...</li>
                            <li>Click on Advanced system settings on the left panel and select Advanced tab on the resulting pop-up window.</li>
                            <li>Click on the button near the bottom labeled Environment Variables.</li>
-                           <li>In the topmost section labeled User variables both TMP and TEMP may be seen listed. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
+                           <li>In the topmost section labeled User variables both TMP and TEMP may be seen. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
                            <li>Any running programs need to be restarted for the new values to take effect. In fact, probably also Windows itself needs to be restarted for it to begin using the new values for its own temporary files.</li>
                         </ol>
                     </li>
@@ -392,14 +392,14 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">Script Homepage</a></td>
     </tr>
     <tr>
-        <th rowspan="12"></th>
-        <td style="padding:6px">Bob Ross: <a href="http://powershell.com/cs/forums/t/6128.aspx">Automated Adobe Flash Player Maintenance PowerScript for Public Computing Environment</a></td>
+        <th rowspan="13"></th>
+        <td style="padding:6px">Bob Ross: <a href="http://powershell.com/cs/forums/t/6128.aspx">Automated Adobe Flash Player Maintenance PowerScript for Public Computing Environment</a> (or one of the <a href="https://web.archive.org/web/20150818075129/http://powershell.com/cs/forums/t/6128.aspx">archive.org versions</a>)</td>
     </tr>
     <tr>
-        <td style="padding:6px">ps1: <a href="http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">Test Internet connection</a></td>
+        <td style="padding:6px">ps1: <a href="http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">Test Internet connection</a> (or one of the <a href="https://web.archive.org/web/20110612212629/http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">archive.org versions</a>)</td>
     </tr>
     <tr>
-        <td style="padding:6px">Tobias Weltner: <a href="http://powershell.com/cs/PowerTips_Monthly_Volume_8.pdf#IDERA-1702_PS-PowerShellMonthlyTipsVol8-jan2014">PowerTips Monthly vol 8 January 2014</a></td>
+        <td style="padding:6px">Tobias Weltner: <a href="http://powershell.com/cs/PowerTips_Monthly_Volume_8.pdf#IDERA-1702_PS-PowerShellMonthlyTipsVol8-jan2014">PowerTips Monthly vol 8 January 2014</a> (or one of the <a href="https://web.archive.org/web/20150110213108/http://powershell.com/cs/media/p/30542.aspx">archive.org versions</a>)</td>
     </tr>
     <tr>
         <td style="padding:6px">alejandro5042: <a href="http://stackoverflow.com/questions/29266622/how-to-run-exe-with-without-elevated-privileges-from-powershell?rq=1">How to run exe with/without elevated privileges from PowerShell</a></td>
@@ -417,7 +417,7 @@
         <td style="padding:6px">JaredPar and Matthew Pirocchi: <a href="http://stackoverflow.com/questions/5466329/whats-the-best-way-to-determine-the-location-of-the-current-powershell-script?noredirect=1&lq=1">What's the best way to determine the location of the current PowerShell script?</a></td>
     </tr>
     <tr>
-        <td style="padding:6px">lamaar75: <a href="http://powershell.com/cs/forums/t/9685.aspx">Creating a Menu</a></td>
+        <td style="padding:6px">lamaar75: <a href="http://powershell.com/cs/forums/t/9685.aspx">Creating a Menu</a> (or one of the <a href="https://web.archive.org/web/20150910111758/http://powershell.com/cs/forums/t/9685.aspx">archive.org versions</a>)</td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://www.credera.com/blog/technology-insights/perfect-progress-bars-for-powershell/">Perfect Progress Bars for PowerShell</a></td>
