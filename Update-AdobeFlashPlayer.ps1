@@ -41,6 +41,7 @@ may be used at the PowerShell prompt window [PS>] in the folder, where the scrip
 $path = $env:temp
 $computer = $env:COMPUTERNAME
 $ErrorActionPreference = "Stop"
+$start_time = Get-Date
 $empty_line = ""
 
 
@@ -194,12 +195,17 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 # Determine the original installed Flash version numbers regardles weather the system is 32- or 64-bits.
-If ($activex_32_bit_version -ne 0) { $activex_baseline = $activex_32_bit_version } Else { $continue = $true }
-If ($activex_64_bit_version -ne 0) { $activex_baseline = $activex_64_bit_version } Else { $continue = $true }
-If ($plugin_32_bit_version -ne 0)  { $plugin_baseline = $plugin_32_bit_version }   Else { $continue = $true }
-If ($plugin_64_bit_version -ne 0)  { $plugin_baseline = $plugin_64_bit_version }   Else { $continue = $true }
-If ($pepper_32_bit_version -ne 0)  { $pepper_baseline = $pepper_32_bit_version }   Else { $continue = $true }
-If ($pepper_64_bit_version -ne 0)  { $pepper_baseline = $pepper_64_bit_version }   Else { $continue = $true }
+If ($activex_64_bit_in_32_bit_mode_version -ne 0) { $activex_baseline = $activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
+If ($activex_32_bit_version -ne 0)                { $activex_baseline = $activex_32_bit_version }                Else { $continue = $true }
+If ($activex_64_bit_version -ne 0)                { $activex_baseline = $activex_64_bit_version }                Else { $continue = $true }
+
+If ($plugin_64_bit_in_32_bit_mode_version -ne 0)  { $plugin_baseline = $plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($plugin_32_bit_version -ne 0)                 { $plugin_baseline = $plugin_32_bit_version }                  Else { $continue = $true }
+If ($plugin_64_bit_version -ne 0)                 { $plugin_baseline = $plugin_64_bit_version }                  Else { $continue = $true }
+
+If ($pepper_64_bit_in_32_bit_mode_version -ne 0)  { $pepper_baseline = $pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($pepper_32_bit_version -ne 0)                 { $pepper_baseline = $pepper_32_bit_version }                  Else { $continue = $true }
+If ($pepper_64_bit_version -ne 0)                 { $pepper_baseline = $pepper_64_bit_version }                  Else { $continue = $true }
 
 
 
@@ -227,7 +233,11 @@ try
 catch [System.Net.WebException]
 {
     Write-Warning "Failed to access $xml_url"
-    Exit
+    $empty_line | Out-String
+    $xml_text = "Please consider running this script again. Sometimes the XML-file just isn't queryable for no apparent reason. The success rate 'in the second go' usually seems to be a bit higher."
+    Write-Output $xml_text
+    $empty_line | Out-String
+    Return "Exiting without checking the latest Flash version numbers or without updating Flash."
 }
 
     $xml_activex_win8_current = ($xml_versions.version.release.ActiveX_win8.version).replace(",",".")
@@ -309,7 +319,7 @@ If ($activex_is_installed -eq $true) {
             $empty_line | Out-String
         } Else {
             $downloading_activex_is_required = $true
-            Write-Warning "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be out-dated."
+            Write-Warning "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be outdated."
             $empty_line | Out-String
             Write-Output "The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed ActiveX Flash version v$activex_baseline needs to be updated."
             $empty_line | Out-String
@@ -323,7 +333,7 @@ If ($activex_is_installed -eq $true) {
             $downloading_activex_is_required = $false
             Write-Warning "Please use Windows Update to update Adobe Flash Player(s) for Internet Explorer (ActiveX) and/or for Edge (ActiveX)."
             $empty_line | Out-String
-            Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be out-dated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed ActiveX Flash version v$activex_baseline needs to be updated. However, the Flash Player ActiveX control on Windows 8.1 and above is a component of Internet Explorer and Edge and is updated via Windows Update. By using the standalone Flash Player ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8.1 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX control on Windows 8.1 and above systems. For updating the ActiveX Flash Player on Windows 8.1 and above systems, please use the Windows Update."
+            Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be outdated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed ActiveX Flash version v$activex_baseline needs to be updated. However, the Flash Player ActiveX control on Windows 8.1 and above is a component of Internet Explorer and Edge and is updated via Windows Update. By using the standalone Flash Player ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8.1 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX control on Windows 8.1 and above systems. For updating the ActiveX Flash Player on Windows 8.1 and above systems, please use the Windows Update."
             $empty_line | Out-String
         } # else
 
@@ -344,7 +354,7 @@ If ($plugin_is_installed -eq $true) {
         $empty_line | Out-String
     } Else {
         $downloading_plugin_is_required = $true
-        Write-Warning "Adobe Flash Player for Firefox (NPAPI) v$plugin_baseline seems to be out-dated."
+        Write-Warning "Adobe Flash Player for Firefox (NPAPI) v$plugin_baseline seems to be outdated."
         $empty_line | Out-String
         Write-Output "The most recent non-beta Flash version of NPAPI is v$xml_plugin_win_current. The installed NPAPI Flash version v$plugin_baseline needs to be updated."
         $empty_line | Out-String
@@ -363,7 +373,7 @@ If ($pepper_is_installed -eq $true) {
         $empty_line | Out-String
     } Else {
         $downloading_pepper_is_required = $true
-        Write-Warning "Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$pepper_baseline seems to be out-dated."
+        Write-Warning "Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$pepper_baseline seems to be outdated."
         $empty_line | Out-String
         Write-Output "The most recent non-beta Flash version of PPAPI is v$xml_ppapi_win_current. The installed PPAPI Flash version v$pepper_baseline needs to be updated."
         $empty_line | Out-String
@@ -419,9 +429,113 @@ If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or (
     Write-Output $no_flash_text_4
     Write-Output $no_flash_text_5
     Write-Output $no_flash_text_6
-    Write-Output $no_flash_text_7    
-    Exit
-} # else
+    Write-Output $no_flash_text_7  
+
+    # Offer the option to install a specific version of Flash, if no Flash is detected and the script is run in an elevated window
+    # Source: "Adding a Simple Menu to a Windows PowerShell Script": https://technet.microsoft.com/en-us/library/ff730939.aspx
+    # Credit: lamaar75: "Creating a Menu": http://powershell.com/cs/forums/t/9685.aspx
+    # Credit: alejandro5042: "How to run exe with/without elevated privileges from PowerShell"
+    If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator") -eq $true) {
+        $empty_line | Out-String
+        Write-Verbose "Welcome to the Admin Corner." -verbose
+        $title_1 = "Install Flash (Step 1/2)"        
+        $message_1 = "Would you like to install one of the Flash versions (ActiveX, NPAPI or PPAPI) with this script?"
+        
+        $yes = New-Object System.Management.Automation.Host.ChoiceDescription    "&Yes",    "Yes:     tries to download and install one of the Flash versions specified on the next step."
+        $no = New-Object System.Management.Automation.Host.ChoiceDescription     "&No",     "No:      exits from this script (similar to Ctrl + C)."
+        $exit = New-Object System.Management.Automation.Host.ChoiceDescription   "&Exit",   "Exit:    exits from this script (similar to Ctrl + C)."
+        $abort = New-Object System.Management.Automation.Host.ChoiceDescription  "A&bort",  "Abort:   exits from this script (similar to Ctrl + C)."
+        $cancel = New-Object System.Management.Automation.Host.ChoiceDescription "&Cancel", "Cancel:  exits from this script (similar to Ctrl + C)."
+
+        $options_1 = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no, $exit, $abort, $cancel)
+        $result_1 = $host.ui.PromptForChoice($title_1, $message_1, $options_1, 1) 
+
+            switch ($result_1)
+                {
+                    0 {
+                    "Yes. Proceeding to the next step.";
+                    $continue = $true
+                    }
+                    1 {
+                    "No. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    }
+                    2 {
+                    "Exit. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    }
+                    3 {
+                    "Abort. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    }
+                    4 {
+                    "Cancel. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    } # 4                           
+                } # switch
+
+        $empty_line | Out-String
+        $title_2 = "Install Flash (Step 2/2)"
+        $message_2 = "Which Flash version would you like to install?"
+
+        $activex = New-Object System.Management.Automation.Host.ChoiceDescription "&ActiveX (pre Win 8.0)", "ActiveX: tries to download and install ActiveX (for Internet Explorer prior to Windows 8.0)."
+        $npapi = New-Object System.Management.Automation.Host.ChoiceDescription "&NPAPI", "NPAPI:   tries to download and install NPAPI (for Firefox, any Windows)."
+        $ppapi = New-Object System.Management.Automation.Host.ChoiceDescription "&PPAPI", "PPAPI:   tries to download and install PPAPI (for Opera and Chromium-based browsers, any Windows)."
+
+        $options_2 = [System.Management.Automation.Host.ChoiceDescription[]]($activex, $npapi, $ppapi, $exit, $abort, $cancel)
+        $result_2 = $host.ui.PromptForChoice($title_2, $message_2, $options_2, 5) 
+
+            switch ($result_2)
+                {
+                    0 {
+                    "ActiveX selected.";
+                    $empty_line | Out-String
+                        If ([System.Environment]::OSVersion.Version -ge '6.2') {
+                            $downloading_activex_is_required = $false
+                            Write-Warning "Please use Windows Update to update Adobe Flash Player(s) for Internet Explorer (ActiveX) and/or for Edge (ActiveX)."
+                            $empty_line | Out-String
+                            Write-Output "The Flash Player ActiveX control on Windows 8.1 and above is a component of Internet Explorer and Edge and is updated via Windows Update. By using the standalone Flash Player ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8.1 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX control on Windows 8.1 and above systems. For updating the ActiveX Flash Player on Windows 8.1 and above systems, please use the Windows Update."
+                            $empty_line | Out-String 
+                            Exit
+                        } Else {
+                            $activex_is_installed = $true
+                            $activex_baseline = "[Nonexistent]"
+                            $downloading_activex_is_required = $true
+                            $continue = $true
+                        } # else
+                    }
+                    1 {
+                    "NPAPI selected.";
+                    $plugin_is_installed = $true
+                    $plugin_baseline = "[Nonexistent]"
+                    $downloading_plugin_is_required = $true
+                    $continue = $true
+                    }
+                    2 {
+                    "PPAPI selected.";
+                    $pepper_is_installed = $true
+                    $pepper_baseline = "[Nonexistent]"
+                    $downloading_pepper_is_required = $true
+                    $continue = $true
+                    }                    
+                    3 {
+                    "Exit. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    }
+                    4 {
+                    "Abort. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    }
+                    5 {
+                    "Cancel. Exiting from Update-AdobeFlashPlayer script.";
+                    Exit
+                    } # 5                             
+                } # switch
+
+    } Else {
+        Exit
+    } # else (Admin Corner)
+} # else (No Flash)
 
 
 
@@ -432,12 +546,12 @@ If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::
     $empty_line | Out-String
     Write-Warning "It seems that this script is run in a 'normal' PowerShell window."
     $empty_line | Out-String
-    Write-Warning "Please consider running this script in an elevated (administrator-level) PowerShell window."
+    Write-Verbose "Please consider running this script in an elevated (administrator-level) PowerShell window." -verbose
     $empty_line | Out-String
     $admin_text = "For performing system altering procedures, such as uninstalling Flash, installing Flash or writing the configuration file of Flash Player (mms.cfg) the elevated rights are mandatory. An elevated PowerShell session can, for example, be initiated by starting PowerShell with the 'run as an administrator' option."
     Write-Output $admin_text
     $empty_line | Out-String   
-    # Write-Verbose "There are, however, several other ways, how the elevated rights can be gained in PowerShell, but IMHO a single instance of the Administrator PowerShell window itself (where PowerShell has been started with the 'run as an administrator' option) is by far the most convenient platform, when the computer is altered on the system level. So even though it could also be possible to write a self elevating PowerShell script (https://blogs.msdn.microsoft.com/virtual_pc_guy/2010/09/23/a-self-elevating-powershell-script/) or run commands elevated in PowerShell (http://powershell.com/cs/blogs/tips/archive/2014/03/19/running-commands-elevated-in-powershell.aspx) with the UAC prompts, the new UAC pop-up window may come as a surprise to the end-user, who isn't neccesarily aware that this script needs the elevated rights to complete the intended actions. Here, the option to abort the script was selected instead of the possibly unexpected UAC prompts."
+    # Write-Verbose "Even though it could also be possible to write a self elevating PowerShell script (https://blogs.msdn.microsoft.com/virtual_pc_guy/2010/09/23/a-self-elevating-powershell-script/) or run commands elevated in PowerShell (http://powershell.com/cs/blogs/tips/archive/2014/03/19/running-commands-elevated-in-powershell.aspx) with the UAC prompts, the new UAC pop-up window may come as a surprise to the end-user, who isn't neccesarily aware that this script needs the elevated rights to complete the intended actions."
     Return "Exiting without updating."
 } Else {
     $continue = $true
@@ -450,6 +564,14 @@ If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::
 
 # Determine the current directory                                                             # Credit: JaredPar and Matthew Pirocchi "What's the best way to determine the location of the current PowerShell script?"
 $script_path = Split-Path -parent $MyInvocation.MyCommand.Definition
+
+# Progress bar variables
+$activity             = "Updating Flash Player"
+$status               = "Status"
+$id                   = 1 # For using more than one progress bars
+$total_steps          = 19 # Manually count the total number of steps in the script
+$step                 = 0.2 # Set this at the beginning of each step
+$task                 = "Setting Initial Variables" # Set this at the beginning of each step
 
 <#
   __
@@ -480,10 +602,12 @@ $script_path = Split-Path -parent $MyInvocation.MyCommand.Definition
         # Download URL 10: http://www.adobe.com/go/full_flashplayer_win_pl_msi
         # Download URL 11: https://get.adobe.com/flashplayer/download/?installer=FP_23_for_Firefox_-_NPAPI&os=Windows%207&browser_type=Gecko&browser_dist=Firefox&dualoffer=false&mdualoffer=true&d=McAfee_Security_Scan_Plus&d=Intel_True_Key&standalone=1
 #>
-
-$download_text = "Downloading the latest full Windows installation file(s) for the Adobe Flash Player from Adobe..."
-Write-Output $download_text
-Write-Verbose 'Depending on how many full installation files are loaded (and on the download speed), this script might take approximately 1.5 - 3 minutes to complete.'
+$empty_line | Out-String
+$timestamp = Get-Date -Format hh:mm:ss
+$update_text = "$timestamp - Initiating the Flash update procedure..."
+Write-Output $update_text
+Write-Verbose "Downloading the latest full Windows installation file(s) for the Adobe Flash Player from Adobe..."
+Write-Verbose "Depending on how many full installation files are loaded (and on the download speed), this script might take approximately 1.5 - 3 minutes to complete."
 $empty_line | Out-String
 
 $activex_url = "https://fpdownload.macromedia.com/pub/flashplayer/latest/help/install_flash_player_ax.exe"
@@ -499,9 +623,11 @@ $plugin_is_downloaded = $false
 $pepper_is_downloaded = $false
 
 
-
-
 If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq $true)) {
+
+    $step = 1
+    $task = "Downloading the latest full Windows installation file for the ActiveX Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
 
     # Purge existing old ActiveX installation files
     If ((Test-Path $activex_save_location) -eq $true) {
@@ -510,8 +636,6 @@ If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq
     } Else {
         $continue = $true
     } # else
-
-    Write-Verbose 'Downloading the latest full Windows installation file for the ActiveX Adobe Flash Player...' -verbose
 
     try
     {
@@ -542,6 +666,10 @@ If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq
 
 If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $true)) {
 
+    $step = 2
+    $task = "Downloading the latest full Windows installation file for the NPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     # Purge existing old NPAPI installation files
     If ((Test-Path $plugin_save_location) -eq $true) {
         Write-Verbose "Deleting $plugin_save_location"
@@ -549,8 +677,6 @@ If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $
     } Else {
         $continue = $true
     } # else
-
-    Write-Verbose 'Downloading the latest full Windows installation file for the NPAPI Adobe Flash Player...' -verbose
 
     try
     {
@@ -581,6 +707,10 @@ If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $
 
 If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $true)) {
 
+    $step = 3
+    $task = "Downloading the latest full Windows installation file for the PPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     # Purge existing old PPAPI installation files
     If ((Test-Path $pepper_save_location) -eq $true) {
         Write-Verbose "Deleting $pepper_save_location"
@@ -588,8 +718,6 @@ If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $
     } Else {
         $continue = $true
     } # else
-
-    Write-Verbose 'Downloading the latest full Windows installation file for the PPAPI Adobe Flash Player...' -verbose
 
     try
     {
@@ -642,6 +770,9 @@ $uninstaller_url = 'https://fpdownload.macromedia.com/get/flashplayer/current/su
 $uninstaller_save_location = "$path\uninstall_flash_player.exe"
 $uninstaller_is_downloaded = $false
 
+$step = 4
+$task = "Downloading the Adobe Flash Player uninstaller from Adobe..."
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
 
 # Purge existing old uninstaller files
 If ((Test-Path $uninstaller_save_location) -eq $true) {
@@ -650,10 +781,6 @@ If ((Test-Path $uninstaller_save_location) -eq $true) {
 } Else {
     $continue = $true
 } # else
-
-
-Write-Verbose 'Downloading the Adobe Flash Player uninstaller from Adobe...' -verbose
-
 
 try
 {
@@ -690,7 +817,9 @@ If ((Test-Path $uninstaller_save_location) -eq $true) {
     (3) Exit all browsers and other programs that use Flash, including AOL Instant Messenger, Yahoo Messenger, MSN Messenger, or other Messengers
 #>
 
-Write-Verbose 'Stopping Flash-related processes...' -verbose
+$step = 5
+$task = "Stopping Flash-related processes..."
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
 
 Stop-Process -ProcessName '*messenger*' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'FlashPlayer*' -ErrorAction SilentlyContinue -Force
@@ -699,6 +828,7 @@ Stop-Process -ProcessName 'chrome*' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'opera*' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'firefox' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'iexplore' -ErrorAction SilentlyContinue -Force
+Start-Sleep -s 5
 
 <#
         If (Get-Process iexplore -ErrorAction SilentlyContinue) {
@@ -732,13 +862,60 @@ Stop-Process -ProcessName 'iexplore' -ErrorAction SilentlyContinue -Force
         # Download URL: See Step #2
 #>
 
-Write-Verbose 'Uninstalling Adobe Flash Player completely...' -verbose
 
-cd $path
-.\uninstall_flash_player.exe -uninstall | Out-Null
-# .\install_flash_player.exe -uninstall | Out-Null
-cd $script_path
-Start-Sleep -s 5
+If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq $true)) {
+
+    $step = 6
+    $task = "Uninstalling the ActiveX Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
+    cd $path
+    .\uninstall_flash_player.exe -uninstall activex | Out-Null
+    cd $script_path
+    Start-Sleep -s 5
+
+} Else {
+    $continue = $true
+} # else
+
+
+
+
+If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $true)) {
+
+    $step = 7
+    $task = "Uninstalling the NPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
+    cd $path
+    .\uninstall_flash_player.exe -uninstall plugin | Out-Null
+    cd $script_path
+    Start-Sleep -s 5
+
+} Else {
+    $continue = $true
+} # else
+
+
+
+
+If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $true)) {
+
+    $step = 8
+    $task = "Uninstalling the PPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)    
+
+    cd $path
+    .\uninstall_flash_player.exe -uninstall pepperplugin | Out-Null
+    cd $script_path
+    Start-Sleep -s 5
+
+} Else {
+    $continue = $true
+} # else
+
+
+
 
 <#
 
@@ -789,10 +966,10 @@ Start-Sleep -s 5
                 $list = 'host1','host2','host3'                 # your hosts go here
                 $application_name = 'appname'                   # your application name goes here (as displayed by win32_product instance)
                 $list | ForEach {
-                    $hostname = $_
+                    $host_name = $_
                     Get-WmiObject -Class Win32_Product -Filter "Name = '$application_name'" -ComputerName $_ | ForEach {
-                        If ($_.uninstall().returnvalue -eq 0) { write-host "Successfully uninstalled $application_name from $($hostname)" }
-                        Else { write-warning "Failed to uninstall $application_name from $($hostname)." }
+                        If ($_.uninstall().returnvalue -eq 0) { write-host "Successfully uninstalled $application_name from $($host_name)" }
+                        Else { write-warning "Failed to uninstall $application_name from $($host_name)." }
                     } # foreach (gwmi)
                 } # foreach (list)
 
@@ -821,31 +998,43 @@ Start-Sleep -s 5
 #>
 
 If ($activex_is_downloaded -eq $true) {
-    Write-Verbose 'Installing the ActiveX Adobe Flash Player...' -verbose
+
+    $step = 9
+    $task = "Installing the ActiveX Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     cd $path
     .\install_flash_player_ax.exe -install | Out-Null
     cd $script_path
-    Start-Sleep -s 10
+    Start-Sleep -s 7
 } Else {
     $continue = $true
 } # else
 
 If ($plugin_is_downloaded -eq $true) {
-    Write-Verbose 'Installing the NPAPI Adobe Flash Player...' -verbose
+
+    $step = 10
+    $task = "Installing the NPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     cd $path
     .\install_flash_player.exe -install | Out-Null
     cd $script_path
-    Start-Sleep -s 10
+    Start-Sleep -s 7
 } Else {
     $continue = $true
 } # else
 
 If ($pepper_is_downloaded -eq $true) {
-    Write-Verbose 'Installing the PPAPI Adobe Flash Player...' -verbose
+
+    $step = 11
+    $task = "Installing the PPAPI Adobe Flash Player..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     cd $path
     .\install_flash_player_ppapi.exe -install | Out-Null
     cd $script_path
-    Start-Sleep -s 10
+    Start-Sleep -s 7
 } Else {
     $continue = $true
 } # else
@@ -857,8 +1046,8 @@ If ($pepper_is_downloaded -eq $true) {
         # Alternative ways to install Adobe Flash Player
 
             # (5B) Install the Flash Player Plugin for Firefox (NPAPI Plugin) as a msi-file with gwmi
-                $installPlugin = Get-WmiObject -List 'Win32_Product'
-                $installPlugin.Install("$path\install_flash_install_flash_player_22_plugin.msi") | Out-Null
+                $install_plugin = Get-WmiObject -List 'Win32_Product'
+                $install_plugin.Install("$path\install_flash_install_flash_player_22_plugin.msi") | Out-Null
 
 
             # (5C) Install the Flash Player Plugin for Firefox (NPAPI Plugin) as a msi-file with msiexec.exe
@@ -895,7 +1084,9 @@ If ($pepper_is_downloaded -eq $true) {
 
                     • 32-bit Windows: C:\Windows\System32\Macromed\Flash
                     • 64-bit Windows: C:\Windows\SysWOW64\Macromed\Flash
-
+                
+                    The %WINDIR% location above represents the Windows system directory, such as C:\Windows
+                
                 Google Chrome uses its own version of the mms.cfg file, saved at:
 
                    • Windows: %USERNAME%/AppData/Local/Google/Chrome/User Data/Default/Pepper Data/Shockwave Flash/System
@@ -907,9 +1098,11 @@ If ($pepper_is_downloaded -eq $true) {
             Starting with version 11.3, the installer contains both the 32 and the 64 bit version, and when running in 64-Bit Windows it will install both versions, which will both use the mms.cfg file from the directory SysWow64.
 #>
 
-Write-Verbose 'Configuring Adobe Flash Player by writing new settings to the mms.cfg file...' -verbose
-
 If ($bit_number -eq "32") {
+
+    $step = 12
+    $task = "Configuring Adobe Flash Player by writing new settings to the mms.cfg file..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)  
 
     If ((Test-Path $env:windir\System32\Macromed\Flash\mms_original.cfg) -eq $true) {
         # If the "original" version of the 32-bit backup file exists, do not overwrite it, but instead create another backup that gets overwritten each time this script is run this deep (practically if an update is attempted after the first update attempt, see below)
@@ -934,6 +1127,10 @@ If ($bit_number -eq "32") {
 
 
 If ($bit_number -eq "64") {
+
+    $step = 12
+    $task = "Configuring Adobe Flash Player by writing new settings to the mms.cfg file..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)    
 
     If ((Test-Path $env:windir\SysWOW64\Macromed\Flash\mms_original.cfg) -eq $true) {
         # If the "original" version of the 32-bit backup file exists, do not overwrite it, but instead create another backup that gets overwritten each time this script is run this deep (practically if an update is attempted after the first update attempt, see below)
@@ -967,11 +1164,15 @@ If ($bit_number -eq "64") {
    / /
   /_/
 
-    (7)  Display the new Flash file version and contents of the Flash installation folder in console.
+    (7)  Display the new Flash file version(s) and the success rate of the update process.
 #>
 
 # Try to find out which Flash versions, if any, are installed on the system after the update
 # Source: "Adobe Flash Player Administration Guide": http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
+
+    $step = 13
+    $task = "Determining the success rate of the update process..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
 
 <#
             ### .msi installed ActiveX for IE
@@ -1095,29 +1296,35 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 # Determine the new installed Flash version numbers regardles weather the system is 32- or 64-bits.
-If ($new_activex_32_bit_version -ne 0) { $new_activex_baseline = $new_activex_32_bit_version } Else { $continue = $true }
-If ($new_activex_64_bit_version -ne 0) { $new_activex_baseline = $new_activex_64_bit_version } Else { $continue = $true }
-If ($new_plugin_32_bit_version -ne 0)  { $new_plugin_baseline = $new_plugin_32_bit_version }   Else { $continue = $true }
-If ($new_plugin_64_bit_version -ne 0)  { $new_plugin_baseline = $new_plugin_64_bit_version }   Else { $continue = $true }
-If ($new_pepper_32_bit_version -ne 0)  { $new_pepper_baseline = $new_pepper_32_bit_version }   Else { $continue = $true }
-If ($new_pepper_64_bit_version -ne 0)  { $new_pepper_baseline = $new_pepper_64_bit_version }   Else { $continue = $true }
+If ($new_activex_64_bit_in_32_bit_mode_version -ne 0) { $new_activex_baseline = $new_activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
+If ($new_activex_32_bit_version -ne 0)                { $new_activex_baseline = $new_activex_32_bit_version }                Else { $continue = $true }
+If ($new_activex_64_bit_version -ne 0)                { $new_activex_baseline = $new_activex_64_bit_version }                Else { $continue = $true }
+
+If ($new_plugin_64_bit_in_32_bit_mode_version -ne 0)  { $new_plugin_baseline = $new_plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($new_plugin_32_bit_version -ne 0)                 { $new_plugin_baseline = $new_plugin_32_bit_version }                  Else { $continue = $true }
+If ($new_plugin_64_bit_version -ne 0)                 { $new_plugin_baseline = $new_plugin_64_bit_version }                  Else { $continue = $true }
+
+If ($new_pepper_64_bit_in_32_bit_mode_version -ne 0)  { $new_pepper_baseline = $new_pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($new_pepper_32_bit_version -ne 0)                 { $new_pepper_baseline = $new_pepper_32_bit_version }                  Else { $continue = $true }
+If ($new_pepper_64_bit_version -ne 0)                 { $new_pepper_baseline = $new_pepper_64_bit_version }                  Else { $continue = $true }
 
 
 
 
-If ($activex_is_downloaded -eq $true) {
+# Determine the success rate of the update process.
+If ($downloading_activex_is_required -eq $true) {
 
     $most_recent_activex_after_update = Check-InstalledSoftware "Adobe Flash Player $most_recent_activex_major_version ActiveX" $xml_activex_win_current
     If ($most_recent_activex_after_update) {
         $success_activex = $true
-        Write-Output "Currently (until the next Flash Player version is released) Adobe Flash Player for Internet Explorer (ActiveX) v$new_activex_baseline doesn't need any further maintenance or care. The $bit_number-bit ActiveX was updated successfully from v$activex_baseline to v$new_activex_baseline"
+        Write-Output "The $bit_number-bit ActiveX was updated successfully from v$activex_baseline to v$new_activex_baseline. Currently (until the next Flash Player version is released) Adobe Flash Player for Internet Explorer (ActiveX) v$new_activex_baseline doesn't need any further maintenance or care."
         $empty_line | Out-String
     } Else {
         $success_activex = $false
         $empty_line | Out-String
         Write-Warning "Failed to update $bit_number-bit ActiveX"
         $empty_line | Out-String
-        Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$new_activex_baseline seems to be out-dated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed Flash version v$new_activex_baseline needs to be updated. This script tried to update the $bit_number-bit ActiveX, but failed to do so."
+        Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$new_activex_baseline seems to be outdated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed Flash version v$new_activex_baseline needs to be updated. This script tried to update the $bit_number-bit ActiveX, but failed to do so."
         $empty_line | Out-String
     } # else
 
@@ -1128,19 +1335,19 @@ If ($activex_is_downloaded -eq $true) {
 
 
 
-If ($plugin_is_downloaded -eq $true) {
+If ($downloading_plugin_is_required -eq $true) {
 
     $most_recent_plugin_after_update = Check-InstalledSoftware "Adobe Flash Player $most_recent_plugin_major_version NPAPI" $xml_plugin_win_current
     If ($most_recent_plugin_after_update) {
         $success_plugin = $true
-        Write-Output "Currently (until the next Flash Player version is released) Adobe Flash Player for Firefox (NPAPI) v$new_plugin_baseline doesn't need any further maintenance or care. The $bit_number-bit NPAPI was updated successfully from v$plugin_baseline to v$new_plugin_baseline"
+        Write-Output "The $bit_number-bit NPAPI was updated successfully from v$plugin_baseline to v$new_plugin_baseline. Currently (until the next Flash Player version is released) Adobe Flash Player for Firefox (NPAPI) v$new_plugin_baseline doesn't need any further maintenance or care."
         $empty_line | Out-String
     } Else {
         $success_plugin = $false
         $empty_line | Out-String
         Write-Warning "Failed to update $bit_number-bit NPAPI"
         $empty_line | Out-String
-        Write-Output "Adobe Flash Player for Firefox (NPAPI) v$new_plugin_baseline seems to be out-dated. The most recent non-beta Flash version of NPAPI is v$xml_plugin_win_current. The installed Flash version v$new_plugin_baseline needs to be updated. This script tried to update the $bit_number-bit NPAPI, but failed to do so."
+        Write-Output "Adobe Flash Player for Firefox (NPAPI) v$new_plugin_baseline seems to be outdated. The most recent non-beta Flash version of NPAPI is v$xml_plugin_win_current. The installed Flash version v$new_plugin_baseline needs to be updated. This script tried to update the $bit_number-bit NPAPI, but failed to do so."
         $empty_line | Out-String
     } # else
 
@@ -1151,19 +1358,19 @@ If ($plugin_is_downloaded -eq $true) {
 
 
 
-If ($pepper_is_downloaded -eq $true) {
+If ($downloading_pepper_is_required -eq $true) {
 
     $most_recent_pepper_after_update = Check-InstalledSoftware "Adobe Flash Player $most_recent_pepper_major_version PPAPI" $xml_ppapi_win_current
     If ($most_recent_pepper_after_update) {
         $success_pepper = $true
-        Write-Output "Currently (until the next Flash Player version is released) Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$new_pepper_baseline doesn't need any further maintenance or care. The $bit_number-bit PPAPI was updated successfully from v$pepper_baseline to v$new_pepper_baseline"
+        Write-Output "The $bit_number-bit PPAPI was updated successfully from v$pepper_baseline to v$new_pepper_baseline. Currently (until the next Flash Player version is released) Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$new_pepper_baseline doesn't need any further maintenance or care."
         $empty_line | Out-String
     } Else {
         $success_pepper = $false
         $empty_line | Out-String
         Write-Warning "Failed to update $bit_number-bit PPAPI"
         $empty_line | Out-String
-        Write-Output "Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$new_pepper_baseline seems to be out-dated. The most recent non-beta Flash version of PPAPI is v$xml_ppapi_win_current. The installed Flash version v$new_pepper_baseline needs to be updated. This script tried to update the $bit_number-bit PPAPI, but failed to do so."
+        Write-Output "Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$new_pepper_baseline seems to be outdated. The most recent non-beta Flash version of PPAPI is v$xml_ppapi_win_current. The installed Flash version v$new_pepper_baseline needs to be updated. This script tried to update the $bit_number-bit PPAPI, but failed to do so."
         $empty_line | Out-String
     } # else
 
@@ -1172,10 +1379,69 @@ If ($pepper_is_downloaded -eq $true) {
 } # else
 
 
+
+
+# Reiterate the status of the up-to-date Flash versions
+If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq $false)) {
+    $not_touched_activex = $true
+    If ([System.Environment]::OSVersion.Version -lt '6.2') {
+            $activex_ok = $true
+            Write-Output "As deemed earlier, currently (until the next Flash Player version is released) Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit ActiveX."
+            $empty_line | Out-String
+    } ElseIf ([System.Environment]::OSVersion.Version -ge '6.2') {
+        If ($most_recent_activex_already_exists) {
+            $activex_ok = $true
+            Write-Output "As deemed earlier, currently (until the next Flash Player version is released) the ActiveX Adobe Flash Player for Internet Explorer and/or for Edge v$activex_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit ActiveX."
+            $empty_line | Out-String
+        } Else {
+            $activex_ok = $false
+            Write-Warning "Please use Windows Update to update Adobe Flash Player(s) for Internet Explorer (ActiveX) and/or for Edge (ActiveX)."
+            $empty_line | Out-String
+            Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be outdated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed ActiveX Flash version v$activex_baseline needs to be updated. However, the Flash Player ActiveX control on Windows 8.1 and above is a component of Internet Explorer and Edge and is updated via Windows Update. By using the standalone Flash Player ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8.1 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX control on Windows 8.1 and above systems. For updating the ActiveX Flash Player on Windows 8.1 and above systems, please use the Windows Update. This script didn't alter the $bit_number-bit ActiveX."
+            $empty_line | Out-String
+        } # else
+
+    } Else {
+        $continue = $true
+    } # else
+
+} Else {
+    $continue = $true
+} # else
+
+
+
+
+If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $false)) {
+
+    $not_touched_plugin = $true
+    Write-Output "As deemed earlier, currently (until the next Flash Player version is released) Adobe Flash Player for Firefox (NPAPI) v$plugin_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit NPAPI."
+    $empty_line | Out-String
+
+} Else {
+    $continue = $true
+} # else
+
+
+
+
+If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $false)) {
+
+    $not_touched_pepper = $true
+    Write-Output "As deemed earlier, currently (until the next Flash Player version is released) Adobe Flash Player for Opera and Chromium-based browsers (PPAPI) v$pepper_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit PPAPI."
+    $empty_line | Out-String
+
+} Else {
+    $continue = $true
+} # else
+
+
+
+
         $obj_success += New-Object -TypeName PSCustomObject -Property @{
-            'Adobe Flash Player for Internet Explorer (ActiveX)'                = If ($activex_is_downloaded -eq $true) { $success_activex } Else { "-" }
-            'Adobe Flash Player for Firefox (NPAPI)'                            = If ($plugin_is_downloaded -eq $true) { $success_plugin } Else { "-" }
-            'Adobe Flash Player for Opera and Chromium-based browsers (PPAPI)'  = If ($pepper_is_downloaded -eq $true) { $success_pepper } Else { "-" }
+            'Adobe Flash Player for Internet Explorer (ActiveX)'                = If ($downloading_activex_is_required -eq $true) { $success_activex } ElseIf ($activex_ok -eq $true) { "Already up-to-date before the script was started" } ElseIf ($activex_ok -eq $false) { "False: Please use Windows Update to update Flash" } Else { "-" }
+            'Adobe Flash Player for Firefox (NPAPI)'                            = If ($downloading_plugin_is_required -eq $true) { $success_plugin } ElseIf ($not_touched_plugin -eq $true) { "Already up-to-date before the script was started" } Else { "-" }
+            'Adobe Flash Player for Opera and Chromium-based browsers (PPAPI)'  = If ($downloading_pepper_is_required -eq $true) { $success_pepper } ElseIf ($not_touched_pepper -eq $true) { "Already up-to-date before the script was started" } Else { "-" }
         } # New-Object
     $obj_success.PSObject.TypeNames.Insert(0,"The Updating Procedure Went Successfully for These Flash Versions")
     $obj_success_selection = $obj_success | Select-Object 'Adobe Flash Player for Internet Explorer (ActiveX)','Adobe Flash Player for Firefox (NPAPI)','Adobe Flash Player for Opera and Chromium-based browsers (PPAPI)'
@@ -1196,16 +1462,20 @@ If ($pepper_is_downloaded -eq $true) {
 
 # Determine the current status of Flash and find out if the script should stop or not
 If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or ($pepper_is_installed -eq $true)) {
-    If (($success_activex -ne $false) -and ($success_plugin -ne $false) -and ($success_pepper -ne $false)) {
+    If (($success_activex -ne $false) -and ($success_plugin -ne $false) -and ($success_pepper -ne $false) -and ($activex_ok -ne $false)) {
         Write-Output "The installed Flash seems to be OK."
         $continue = $true
     } Else {
-        Return "Encountered a problem when installing the Flash. Exiting in Step 7 without deleting the downloaded files."
+        If ($activex_ok -eq $false) {
+            $continue = $true
+        } Else {     
+            Return "Encountered a problem when installing the Flash. Exiting in Step 7 without deleting the downloaded files."
+        } # else
     } # else
 } Else {
     Write-Warning "No Flash (ActiveX, NPAPI or PPAPI) seems to be installed on the system."
     $empty_line | Out-String
-    Write-Warning "Ooops..."
+    Write-Verbose "Ooops..." -verbose
     $empty_line | Out-String
     $fail_text_1 = "After this script had downloaded the installation file(s) and run its update procedure,"
     $fail_text_2 = "it didn't detect that any of the three types of Flash Players mentioned above"
@@ -1241,8 +1511,19 @@ If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or (
     (8) Verify that the Flash Player has been installed by opening a web page in the default browser
 #>
 
+    $step = 14
+    $task = "Verifying that the Flash Player has been installed by opening a web page in the default browser..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
+
 Start-Process -FilePath "http://www.adobe.com/products/flash/about/" | Out-Null
+
 # Start-Process -FilePath "https://helpx.adobe.com/flash-player.html" | Out-Null
+
+### For opening Internet Explorer
+# $ie = New-Object -ComObject "InternetExplorer.Application" 
+# $ie.visible = $true 
+# $ie.navigate("http://www.adobe.com/products/flash/about/") 
 
 
 
@@ -1255,34 +1536,93 @@ Start-Process -FilePath "http://www.adobe.com/products/flash/about/" | Out-Null
     / /
    /_/
 
-    (9) Delete the downloaded files
+    (9) Delete the downloaded files and find out how long the script took to complete
 #>
 
 Start-Sleep -s 10
 
 If ($uninstaller_is_downloaded -eq $true) {
+
+    $step = 15
+    $task = "Deleting the downloaded files..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     Remove-Item -Path "$uninstaller_save_location"
 } Else {
     $continue = $true
 } # else
 
 If ($activex_is_downloaded -eq $true) {
+
+    $step = 16
+    $task = "Deleting the downloaded files..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     Remove-Item -Path "$activex_save_location"
 } Else {
     $continue = $true
 } # else
 
 If ($plugin_is_downloaded -eq $true) {
+
+    $step = 17
+    $task = "Deleting the downloaded files..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     Remove-Item -Path "$plugin_save_location"
 } Else {
     $continue = $true
 } # else
 
 If ($pepper_is_downloaded -eq $true) {
+
+    $step = 18
+    $task = "Deleting the downloaded files..."
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+
     Remove-Item -Path "$pepper_save_location"
 } Else {
     $continue = $true
 } # else
+
+
+# Close the progress bar
+$step = 19
+$task = "Finished updating Flash."
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100) -Completed
+
+
+# Find out how long the script took to complete
+$end_time = Get-Date
+$runtime = ($end_time) - ($start_time)
+
+    If ($runtime.Days -ge 2) {
+        $runtime_result = [string]$runtime.Days + ' days ' + $runtime.Hours + ' h ' + $runtime.Minutes + ' min'
+    } ElseIf ($runtime.Days -gt 0) {
+        $runtime_result = [string]$runtime.Days + ' day ' + $runtime.Hours + ' h ' + $runtime.Minutes + ' min'
+    } ElseIf ($runtime.Hours -gt 0) {
+        $runtime_result = [string]$runtime.Hours + ' h ' + $runtime.Minutes + ' min'
+    } ElseIf ($runtime.Minutes -gt 0) {
+        $runtime_result = [string]$runtime.Minutes + ' min ' + $runtime.Seconds + ' sec'
+    } ElseIf ($runtime.Seconds -gt 0) {
+        $runtime_result = [string]$runtime.Seconds + ' sec'
+    } Else {
+        $runtime_result = [string]''
+    } # else (if)
+
+        If ($runtime_result.Contains("0 h")) {
+            $runtime_result = $runtime_result.Replace("0 h","")
+            } If ($runtime_result.Contains("0 min")) {
+                $runtime_result = $runtime_result.Replace("0 min","")
+                } If ($runtime_result.Contains("0 sec")) {
+                $runtime_result = $runtime_result.Replace("0 sec","")
+        } # if ($runtime_result: first)
+
+# Display the runtime in console
+$empty_line | Out-String
+$runtime_text = "The update took $runtime_result to complete."
+Write-Output $runtime_text
+$empty_line | Out-String
 
 
 
@@ -1308,7 +1648,8 @@ https://community.spiceworks.com/topic/487699-a-little-powershell-help-flash-ver
 https://www.reddit.com/r/PowerShell/comments/3tgr2m/get_current_versions_of_adobe_products/                         # Kreloc: "Get current versions of Adobe Products"
 https://chocolatey.org/packages/flashplayerplugin                                                                   # chocolatey: "Flash Player Plugin"
 http://stackoverflow.com/questions/5466329/whats-the-best-way-to-determine-the-location-of-the-current-powershell-script?noredirect=1&lq=1      # JaredPar and Matthew Pirocchi "What's the best way to determine the location of the current PowerShell script?"
-
+https://technet.microsoft.com/en-us/library/ff730939.aspx                                                           # "Adding a Simple Menu to a Windows PowerShell Script"
+http://powershell.com/cs/forums/t/9685.aspx                                                                         # lamaar75: "Creating a Menu"
 
   _    _      _
  | |  | |    | |
@@ -1348,13 +1689,18 @@ actually downloading any files or making any changes to the system. To perform a
 update with Update-AdobeFlashPlayer, PowerShell has to be run in an elevated window
 (run as an administrator).
 
+If Update-AdobeFlashPlayer is run in an elevated PowerShell window and no Flash is 
+detected, the script offers the option to install one specific version of Flash in 
+two steps in the "Admin Corner", where, in contrary to the main autonomous nature of 
+Update-AdobeFlashPlayer, an end-user input is required.
+
 In the update procedure (if old Flash has been found and Update-AdobeFlashPlayer 
-is run with administrative rights) Update-AdobeFlashPlayer downloads a Flash 
-uninstaller from Adobe and full Flash installer(s) for the type(s) of Flash 
-Player(s) from Adobe, which it has deemed to be out-dated, and uninstalls Flash 
-completely. Several Flash-related processes are stopped before the downloaded Flash 
-Player(s) is/are installed. Adobe Flash Player is configured by creating a backup of 
-the exisiting configuration file (mms.cfg) and overwriting new settings to the 
+is run with administrative rights) Update-AdobeFlashPlayer downloads the Flash 
+uninstaller from Adobe and (a) full Flash installer(s) for the type(s) of Flash 
+Player(s) from Adobe, which it has deemed to be outdated and after stopping several 
+Flash-related processes uninstalls the outdated Flash version(s) and installs the 
+downloaded Flash Player(s). Adobe Flash Player is configured by creating a backup 
+of the exisiting configuration file (mms.cfg) and overwriting new settings to the 
 configuration file. After the installation a web page in the default browser is 
 opened for verifying that the Flash Player has been installed correctly. The 
 downloaded files are purged from the hard drive after a while. This script is
@@ -1363,7 +1709,7 @@ PowerScript for Public Computing Environment"
 (http://powershell.com/cs/forums/t/6128.aspx).
 
 .OUTPUTS
-Displays Flash related information in console. Tries to update out-dated Adobe Flash 
+Displays Flash related information in console. Tries to update outdated Adobe Flash 
 Player(s) to its/their latest version(s), if old Flash Player(s) is/are found and 
 if Update-AdobeFlashPlayer is run in an elevated Powershell window. In addition to 
 that, if such an update procedure is initiated...
@@ -1378,9 +1724,6 @@ and the following backups are made:
         32-bit Windows:   %WINDIR%\System32\Macromed\Flash\mms.cfg
         64-bit Windows:   %WINDIR%\SysWow64\Macromed\Flash\mms.cfg
 
-        32-bit Windows:   C:\Windows\System32\Macromed\Flash\mms.cfg
-        64-bit Windows:   C:\Windows\SysWOW64\Macromed\Flash\mms.cfg
-
 
     'Original' file, which is created when the script tries to update something for 
     the first time:
@@ -1388,19 +1731,16 @@ and the following backups are made:
         32-bit Windows:   %WINDIR%\System32\Macromed\Flash\mms_original.cfg
         64-bit Windows:   %WINDIR%\SysWow64\Macromed\Flash\mms_original.cfg
 
-        32-bit Windows:   C:\Windows\System32\Macromed\Flash\mms_original.cfg
-        64-bit Windows:   C:\Windows\SysWOW64\Macromed\Flash\mms_original.cfg
-
 
     'Backup' file, which is created when the script tries to update something for 
-    the second time, and which gets overwritten in each successive update cycle:
+    the second time and which gets overwritten in each successive update cycle:
 
         32-bit Windows:   %WINDIR%\System32\Macromed\Flash\mms_backup.cfg
         64-bit Windows:   %WINDIR%\SysWow64\Macromed\Flash\mms_backup.cfg
 
-        32-bit Windows:   C:\Windows\System32\Macromed\Flash\mms_backup.cfg
-        64-bit Windows:   C:\Windows\SysWOW64\Macromed\Flash\mms_backup.cfg
 
+    The %WINDIR% location represents the Windows system directory, such as
+    C:\Windows and may be displayed in PowerShell with the $env:windir varible.
 
 To see the actual values that are being written, please see Step 6 above (altering 
 the duplicated values below won't affect the script in any meaningful way) 
@@ -1415,20 +1755,20 @@ the duplicated values below won't affect the script in any meaningful way)
     ThirdPartyStorage = 0       Denies third-party locally persistent shared objects
 
 
-    Most of the setting above may render some web pages broken.
+    Most of the settings above may render some web pages broken.
 
-For a comprehensive list of available settings and a more detailed decription 
+For a comprehensive list of available settings and a more detailed description 
 of the values above, please see the "Adobe Flash Player Administration Guide" at
 http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html  
 
 To open these file locations in a Resource Manager Window, for instance a command
 
 
-    Invoke-Item C:\Windows\System32\Macromed\Flash\
+    Invoke-Item $env:windir\System32\Macromed\Flash\
 
             or
 
-    Invoke-Item C:\Windows\SysWOW64\Macromed\Flash\
+    Invoke-Item $env:windir\SysWOW64\Macromed\Flash\
 
 
 may be used at the PowerShell prompt window [PS>].  
@@ -1457,6 +1797,11 @@ ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8
 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX 
 control on Windows 8.1 and above systems.
 
+Please note that when run in an elevated PowerShell window and old Flash Player(s) 
+is/are detected, Update-AdobeFlashPlayer will automatically try to download files 
+from the Internet without prompting the end-user beforehand or without asking any 
+confirmations (in Step 1 and Step 2).
+
 Please note that the downloaded files are temporarily placed in a directory, which 
 is specified with the $path variable (at line 41). The $env:temp variable points 
 to the current temp folder. The default value of the $env:temp variable is 
@@ -1471,7 +1816,7 @@ to C:\Temp, please, for example, follow the instructions at
 http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html
 
     Homepage:           https://github.com/auberginehill/update-adobe-flash-player
-    Version:            1.0
+    Version:            1.1
 
 .EXAMPLE
 ./Update-AdobeFlashPlayer
@@ -1529,6 +1874,9 @@ https://community.spiceworks.com/topic/487699-a-little-powershell-help-flash-ver
 https://www.reddit.com/r/PowerShell/comments/3tgr2m/get_current_versions_of_adobe_products/
 https://chocolatey.org/packages/flashplayerplugin
 http://stackoverflow.com/questions/5466329/whats-the-best-way-to-determine-the-location-of-the-current-powershell-script?noredirect=1&lq=1
+http://powershell.com/cs/forums/t/9685.aspx
+https://www.credera.com/blog/technology-insights/perfect-progress-bars-for-powershell/
+https://technet.microsoft.com/en-us/library/ff730939.aspx
 https://msdn.microsoft.com/en-us/library/aa393941(v=vs.85).aspx
 
 #>
