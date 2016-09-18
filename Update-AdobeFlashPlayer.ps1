@@ -577,6 +577,9 @@ $total_steps          = 19 # Total number of the steps or tasks, which will incr
 $task_number          = 0.2 # An increasing numerical value, which is set at the beginning of each of the steps that increments the progress bar (and the value should be less or equal to total_steps). In essence, this is the "progress" of the progress bar.
 $task                 = "Setting Initial Variables" # A description of the current operation, which is set at the beginning of each of the steps that increments the progress bar.
 
+# Start the progress bar
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
+
 <#
   __
  /_ |
