@@ -582,7 +582,7 @@ $task                 = "Setting Initial Variables" # Set this at the beginning 
   |_|
 
 
-    (1) Download the latest full Windows installation file(s) for the Adobe Flash Player
+    (Step 1) Download the latest full Windows installation file(s) for the Adobe Flash Player
         # Note: The .msi installation files are more handy than the .exe installation files, because msi-files can be deployed over a Windows network using msiexec.exe (supporting an unattended install/uninstall) or installed interactively with software such as Microsoft Systems Management Server (SMS).
         # Source 1: "Installation problems | Flash Player | Windows 7 and earlier": https://helpx.adobe.com/flash-player/kb/installation-problems-flash-player-windows.html
         # Source 2: "Adobe Flash Player Distribution" (This page and the download links will be decommissioned on Sep 29, 2016.): https://www.adobe.com/products/flashplayer/distribution3.html
@@ -755,7 +755,7 @@ If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $
  |____|
 
 
-    (2) Download the Flash Player Uninstaller
+    (Step 2) Download the Flash Player Uninstaller
         # Note: The EXE installer is also able to uninstall Flash at least partially, so this step could be omitted.
         # Note: If .msi install files had been used with msiexec.exe the uninstaller isn't needed at all.
         # Note: FlashUtil.exe (or something similar) in the C:\Windows\System32\Macromed\Flash directory ( %WINDIR%\System32\Macromed\Flash ) is also able to uninstall Flash. When using the FlashUtil<nnn>.exe to uninstall, the user is still required to use the -force argument to perform a complete uninstall.
@@ -814,7 +814,7 @@ If ((Test-Path $uninstaller_save_location) -eq $true) {
  |____/
 
 
-    (3) Exit all browsers and other programs that use Flash, including AOL Instant Messenger, Yahoo Messenger, MSN Messenger, or other Messengers
+    (Step 3) Exit all browsers and other programs that use Flash, including AOL Instant Messenger, Yahoo Messenger, MSN Messenger, or other Messengers
 #>
 
 $step = 5
@@ -853,7 +853,7 @@ Start-Sleep -s 5
     |_|
 
 
-    (4A) Uninstall Adobe Flash Player completely with uninstall_flash_player.exe
+    (Step 4A) Uninstall Adobe Flash Player completely with uninstall_flash_player.exe
         # Note: It seems that Windows PowerShell has to be run in an elevated state (Run as an Administrator) for this script to actually be able to uninstall Flash.
         # Note: The standalone uninstaller from Adobe is definetly not the only way, how Flash Players can be uninstalled. Please see below for futher discussion and examples, how to uninstall Flash.
         # Description 1: "Adobe Flash Player Administration Guide": http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
@@ -989,7 +989,7 @@ If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $
   ___) |
  |____/
 
-    (5A) Install the downloaded Flash Player version(s)
+    (Step 5A) Install the downloaded Flash Player version(s)
         # Note: It seems that Windows PowerShell has to be run in an elevated state (Run as an Administrator) for this script to actually be able to install Flash.
         # Description 1: "Adobe Flash Player Administration Guide": http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
         # Description 2: "Silent install command line argument doesn't work | Flash Player 10.1": https://helpx.adobe.com/flash-player/kb/silent-install-command-line-argument.html
@@ -1069,7 +1069,7 @@ If ($pepper_is_downloaded -eq $true) {
  | (_) |
   \___/
 
-    (6) Configure Adobe Flash Player by creating a backup of the exisiting configuration files and writing new settings to the configuration files
+    (Step 6) Configure Adobe Flash Player by creating a backup of the exisiting configuration files and writing new settings to the configuration files
         # Note: Windows PowerShell has to be run in an elevated state (Run as an Administrator) for this script to actually be able to write the mms.cfg files.
         # Description: "Adobe Flash Player Administration Guide": http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
         # Source: http://www.klaus-hartnegg.de/gpo/msi_flash.html
@@ -1164,7 +1164,7 @@ If ($bit_number -eq "64") {
    / /
   /_/
 
-    (7)  Display the new Flash file version(s) and the success rate of the update process.
+    (Step 7)  Display the new Flash file version(s) and the success rate of the update process.
 #>
 
 # Try to find out which Flash versions, if any, are installed on the system after the update
@@ -1508,7 +1508,7 @@ If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or (
  | (_) |
   \___/
 
-    (8) Verify that the Flash Player has been installed by opening a web page in the default browser
+    (Step 8) Verify that the Flash Player has been installed by opening a web page in the default browser
 #>
 
     $step = 14
@@ -1536,7 +1536,7 @@ Start-Process -FilePath "http://www.adobe.com/products/flash/about/" | Out-Null
     / /
    /_/
 
-    (9) Delete the downloaded files and find out how long the script took to complete
+    (Step 9) Delete the downloaded files and find out how long the script took to complete
 #>
 
 Start-Sleep -s 10
