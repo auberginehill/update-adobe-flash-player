@@ -570,7 +570,7 @@ $activity             = "Updating Flash Player"
 $status               = "Status"
 $id                   = 1 # For using more than one progress bar
 $total_steps          = 19 # Total number of the steps or tasks, which will increment the progress bar
-$step                 = 0.2 # An increasing numerical value, which is set at the beginning of each of the steps that increments the progress bar (and the value should be less or equal to total_value). In essence, this is the "progress" of the progress bar.
+$step                 = 0.2 # An increasing numerical value, which is set at the beginning of each of the steps that increments the progress bar (and the value should be less or equal to total_steps). In essence, this is the "progress" of the progress bar.
 $task                 = "Setting Initial Variables" # A description of the current operation, which is set at the beginning of each of the steps that increments the progress bar.
 
 <#
