@@ -55,6 +55,38 @@
                     <td style="padding:6px">Bob Ross:</td>
                     <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/6128.aspx">Automated Adobe Flash Player Maintenance PowerScript for Public Computing Environment</a></td>
                 </tr>
+                <tr>
+                    <td style="padding:6px">ps1:</td> 
+                    <td style="padding:6px"><a href="http://powershell.com/cs/blogs/tips/archive/2011/05/04/test-internet-connection.aspx">Test Internet connection</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">Tobias Weltner:</td> 
+                    <td style="padding:6px"><a href="http://powershell.com/cs/PowerTips_Monthly_Volume_8.pdf#IDERA-1702_PS-PowerShellMonthlyTipsVol8-jan2014">PowerTips Monthly vol 8 January 2014</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">alejandro5042:</td> 
+                    <td style="padding:6px"><a href="http://stackoverflow.com/questions/29266622/how-to-run-exe-with-without-elevated-privileges-from-powershell?rq=1">How to run exe with/without elevated privileges from PowerShell</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">Raven Hunter:</td> 
+                    <td style="padding:6px"><a href="https://community.spiceworks.com/topic/487699-a-little-powershell-help-flash-version-query">A little powershell help, Flash Version Query</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">Kreloc:</td> 
+                    <td style="padding:6px"><a href="https://www.reddit.com/r/PowerShell/comments/3tgr2m/get_current_versions_of_adobe_products/">Get current versions of Adobe Products</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">chocolatey:</td> 
+                    <td style="padding:6px"><a href="https://chocolatey.org/packages/flashplayerplugin">Flash Player Plugin</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">JaredPar and Matthew Pirocchi:</td> 
+                    <td style="padding:6px"><a href="http://stackoverflow.com/questions/5466329/whats-the-best-way-to-determine-the-location-of-the-current-powershell-script?noredirect=1&lq=1">What's the best way to determine the location of the current PowerShell script?</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px">lamaar75:</td> 
+                    <td style="padding:6px"><a href="http://powershell.com/cs/forums/t/9685.aspx">Creating a Menu</a></td>
+                </tr>
             </table>
         </td>
    </tr>
@@ -244,11 +276,11 @@
                     <br />
                     <br />may be used at the PowerShell prompt window <code>[PS>]</code>. To change the temp folder for instance to <code>C:\Temp</code>, please, for example, follow the instructions at <a href="http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html">Temporary Files Folder - Change Location in Windows</a>, which in essence are something along the lines:
                         <ol>
-                           <li>Right click on Computer and click on Properties. In the resulting window with the basic information about your computer...</li>
+                           <li>Right click on Computer and click on Properties (Or select Start → Control Panel → System). In the resulting window with the basic information about the computer...</li>
                            <li>Click on Advanced system settings on the left panel and select Advanced tab on the resulting pop-up window.</li>
                            <li>Click on the button near the bottom labeled Environment Variables.</li>
-                           <li>In the topmost section labeled User variables you may see both TMP and TEMP listed. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
-                           <li>You'll need to restart any running programs for the new value to take effect. In fact, you'll probably also need to restart Windows for it to begin using the new value for its own temporary files.</li>
+                           <li>In the topmost section labeled User variables both TMP and TEMP may be seen listed. Each different login account is assigned its own temporary locations. These values can be changed by double clicking a value or by highlighting a value and selecting Edit. The specified path will be used by Windows and many other programs for temporary files. It's advisable to set the same value (a directory path) for both TMP and TEMP.</li>
+                           <li>Any running programs need to be restarted for the new values to take effect. In fact, probably also Windows itself needs to be restarted for it to begin using the new values for its own temporary files.</li>
                         </ol>
                     </li>
                 </p>
