@@ -574,7 +574,7 @@ $activity             = "Updating Flash Player"
 $status               = "Status"
 $id                   = 1 # For using more than one progress bar
 $total_steps          = 19 # Total number of the steps or tasks, which will increment the progress bar
-$step                 = 0.2 # An increasing numerical value, which is set at the beginning of each of the steps that increments the progress bar (and the value should be less or equal to total_steps). In essence, this is the "progress" of the progress bar.
+$task_number          = 0.2 # An increasing numerical value, which is set at the beginning of each of the steps that increments the progress bar (and the value should be less or equal to total_steps). In essence, this is the "progress" of the progress bar.
 $task                 = "Setting Initial Variables" # A description of the current operation, which is set at the beginning of each of the steps that increments the progress bar.
 
 <#
@@ -626,9 +626,9 @@ $pepper_is_downloaded = $false
 
 If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq $true)) {
 
-    $step = 1
+    $task_number = 1
     $task = "Downloading the latest full Windows installation file for the ActiveX Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     # Purge existing old ActiveX installation files
     If ((Test-Path $activex_save_location) -eq $true) {
@@ -667,9 +667,9 @@ If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq
 
 If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $true)) {
 
-    $step = 2
+    $task_number = 2
     $task = "Downloading the latest full Windows installation file for the NPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     # Purge existing old NPAPI installation files
     If ((Test-Path $plugin_save_location) -eq $true) {
@@ -708,9 +708,9 @@ If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $
 
 If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $true)) {
 
-    $step = 3
+    $task_number = 3
     $task = "Downloading the latest full Windows installation file for the PPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     # Purge existing old PPAPI installation files
     If ((Test-Path $pepper_save_location) -eq $true) {
@@ -771,9 +771,9 @@ $uninstaller_url = 'https://fpdownload.macromedia.com/get/flashplayer/current/su
 $uninstaller_save_location = "$path\uninstall_flash_player.exe"
 $uninstaller_is_downloaded = $false
 
-$step = 4
+$task_number = 4
 $task = "Downloading the Adobe Flash Player uninstaller from Adobe..."
-Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
 # Purge existing old uninstaller files
 If ((Test-Path $uninstaller_save_location) -eq $true) {
@@ -818,9 +818,9 @@ If ((Test-Path $uninstaller_save_location) -eq $true) {
     (Step 3) Exit all browsers and other programs that use Flash, including AOL Instant Messenger, Yahoo Messenger, MSN Messenger, or other Messengers
 #>
 
-$step = 5
+$task_number = 5
 $task = "Stopping Flash-related processes..."
-Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
 Stop-Process -ProcessName '*messenger*' -ErrorAction SilentlyContinue -Force
 Stop-Process -ProcessName 'FlashPlayer*' -ErrorAction SilentlyContinue -Force
@@ -866,9 +866,9 @@ Start-Sleep -s 5
 
 If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq $true)) {
 
-    $step = 6
+    $task_number = 6
     $task = "Uninstalling the ActiveX Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     cd $path
     .\uninstall_flash_player.exe -uninstall activex | Out-Null
@@ -884,9 +884,9 @@ If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq
 
 If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $true)) {
 
-    $step = 7
+    $task_number = 7
     $task = "Uninstalling the NPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     cd $path
     .\uninstall_flash_player.exe -uninstall plugin | Out-Null
@@ -902,9 +902,9 @@ If (($plugin_is_installed -eq $true) -and ($downloading_plugin_is_required -eq $
 
 If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $true)) {
 
-    $step = 8
+    $task_number = 8
     $task = "Uninstalling the PPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)    
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)    
 
     cd $path
     .\uninstall_flash_player.exe -uninstall pepperplugin | Out-Null
@@ -1000,9 +1000,9 @@ If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $
 
 If ($activex_is_downloaded -eq $true) {
 
-    $step = 9
+    $task_number = 9
     $task = "Installing the ActiveX Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     cd $path
     .\install_flash_player_ax.exe -install | Out-Null
@@ -1014,9 +1014,9 @@ If ($activex_is_downloaded -eq $true) {
 
 If ($plugin_is_downloaded -eq $true) {
 
-    $step = 10
+    $task_number = 10
     $task = "Installing the NPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     cd $path
     .\install_flash_player.exe -install | Out-Null
@@ -1028,9 +1028,9 @@ If ($plugin_is_downloaded -eq $true) {
 
 If ($pepper_is_downloaded -eq $true) {
 
-    $step = 11
+    $task_number = 11
     $task = "Installing the PPAPI Adobe Flash Player..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     cd $path
     .\install_flash_player_ppapi.exe -install | Out-Null
@@ -1101,9 +1101,9 @@ If ($pepper_is_downloaded -eq $true) {
 
 If ($bit_number -eq "32") {
 
-    $step = 12
+    $task_number = 12
     $task = "Configuring Adobe Flash Player by writing new settings to the mms.cfg file..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)  
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)  
 
     If ((Test-Path $env:windir\System32\Macromed\Flash\mms_original.cfg) -eq $true) {
         # If the "original" version of the 32-bit backup file exists, do not overwrite it, but instead create another backup that gets overwritten each time this script is run this deep (practically if an update is attempted after the first update attempt, see below)
@@ -1129,9 +1129,9 @@ If ($bit_number -eq "32") {
 
 If ($bit_number -eq "64") {
 
-    $step = 12
+    $task_number = 12
     $task = "Configuring Adobe Flash Player by writing new settings to the mms.cfg file..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)    
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)    
 
     If ((Test-Path $env:windir\SysWOW64\Macromed\Flash\mms_original.cfg) -eq $true) {
         # If the "original" version of the 32-bit backup file exists, do not overwrite it, but instead create another backup that gets overwritten each time this script is run this deep (practically if an update is attempted after the first update attempt, see below)
@@ -1171,9 +1171,9 @@ If ($bit_number -eq "64") {
 # Try to find out which Flash versions, if any, are installed on the system after the update
 # Source: "Adobe Flash Player Administration Guide": http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
 
-    $step = 13
+    $task_number = 13
     $task = "Determining the success rate of the update process..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
 <#
             ### .msi installed ActiveX for IE
@@ -1512,9 +1512,9 @@ If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or (
     (Step 8) Verify that the Flash Player has been installed by opening a web page in the default browser
 #>
 
-    $step = 14
+    $task_number = 14
     $task = "Verifying that the Flash Player has been installed by opening a web page in the default browser..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
 
 Start-Process -FilePath "http://www.adobe.com/products/flash/about/" | Out-Null
@@ -1544,9 +1544,9 @@ Start-Sleep -s 10
 
 If ($uninstaller_is_downloaded -eq $true) {
 
-    $step = 15
+    $task_number = 15
     $task = "Deleting the downloaded files..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     Remove-Item -Path "$uninstaller_save_location"
 } Else {
@@ -1555,9 +1555,9 @@ If ($uninstaller_is_downloaded -eq $true) {
 
 If ($activex_is_downloaded -eq $true) {
 
-    $step = 16
+    $task_number = 16
     $task = "Deleting the downloaded files..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     Remove-Item -Path "$activex_save_location"
 } Else {
@@ -1566,9 +1566,9 @@ If ($activex_is_downloaded -eq $true) {
 
 If ($plugin_is_downloaded -eq $true) {
 
-    $step = 17
+    $task_number = 17
     $task = "Deleting the downloaded files..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     Remove-Item -Path "$plugin_save_location"
 } Else {
@@ -1577,9 +1577,9 @@ If ($plugin_is_downloaded -eq $true) {
 
 If ($pepper_is_downloaded -eq $true) {
 
-    $step = 18
+    $task_number = 18
     $task = "Deleting the downloaded files..."
-    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100)
+    Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100)
 
     Remove-Item -Path "$pepper_save_location"
 } Else {
@@ -1588,9 +1588,9 @@ If ($pepper_is_downloaded -eq $true) {
 
 
 # Close the progress bar
-$step = 19
+$task_number = 19
 $task = "Finished updating Flash."
-Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete ($step / $total_steps * 100) -Completed
+Write-Progress -Id $id -Activity $activity -Status $status -CurrentOperation $task -PercentComplete (($task_number / $total_steps) * 100) -Completed
 
 
 # Find out how long the script took to complete
