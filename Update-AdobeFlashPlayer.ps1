@@ -1610,6 +1610,12 @@ $runtime = ($end_time) - ($start_time)
         $runtime_result = [string]$runtime.Minutes + ' min ' + $runtime.Seconds + ' sec'
     } ElseIf ($runtime.Seconds -gt 0) {
         $runtime_result = [string]$runtime.Seconds + ' sec'
+    } ElseIf ($runtime.Milliseconds -gt 1) {
+        $runtime_result = [string]$runtime.Milliseconds + ' milliseconds'
+    } ElseIf ($runtime.Milliseconds -eq 1) {
+        $runtime_result = [string]$runtime.Milliseconds + ' millisecond'       
+    } ElseIf (($runtime.Milliseconds -gt 0) -and ($runtime.Milliseconds -lt 1)) {
+        $runtime_result = [string]$runtime.Milliseconds + ' milliseconds'                
     } Else {
         $runtime_result = [string]''
     } # else (if)
