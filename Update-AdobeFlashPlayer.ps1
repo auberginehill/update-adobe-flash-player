@@ -561,6 +561,10 @@ If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::
 
 
 # Initiate the update process
+$empty_line | Out-String
+$timestamp = Get-Date -Format hh:mm:ss
+$update_text = "$timestamp - Initiating the Flash update procedure..."
+Write-Output $update_text
 
 # Determine the current directory                                                             # Credit: JaredPar and Matthew Pirocchi "What's the best way to determine the location of the current PowerShell script?"
 $script_path = Split-Path -parent $MyInvocation.MyCommand.Definition
@@ -602,10 +606,7 @@ $task                 = "Setting Initial Variables" # A description of the curre
         # Download URL 10: http://www.adobe.com/go/full_flashplayer_win_pl_msi
         # Download URL 11: https://get.adobe.com/flashplayer/download/?installer=FP_23_for_Firefox_-_NPAPI&os=Windows%207&browser_type=Gecko&browser_dist=Firefox&dualoffer=false&mdualoffer=true&d=McAfee_Security_Scan_Plus&d=Intel_True_Key&standalone=1
 #>
-$empty_line | Out-String
-$timestamp = Get-Date -Format hh:mm:ss
-$update_text = "$timestamp - Initiating the Flash update procedure..."
-Write-Output $update_text
+
 Write-Verbose "Downloading the latest full Windows installation file(s) for the Adobe Flash Player from Adobe..."
 Write-Verbose "Depending on how many full installation files are loaded (and on the download speed), this script might take approximately 1.5 - 3 minutes to complete."
 $empty_line | Out-String
