@@ -195,17 +195,18 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 # Determine the original installed Flash version numbers regardles weather the system is 32- or 64-bits.
-If ($activex_64_bit_in_32_bit_mode_version -ne 0) { $activex_baseline = $activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
-If ($activex_32_bit_version -ne 0)                { $activex_baseline = $activex_32_bit_version }                Else { $continue = $true }
-If ($activex_64_bit_version -ne 0)                { $activex_baseline = $activex_64_bit_version }                Else { $continue = $true }
+If ($activex_64_bit_in_32_bit_mode_version -ne $null) { $activex_baseline = $activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
+If ($activex_32_bit_version -ne $null)                { $activex_baseline = $activex_32_bit_version }                Else { $continue = $true }
+If ($activex_64_bit_version -ne $null)                { $activex_baseline = $activex_64_bit_version }                Else { $continue = $true }
 
-If ($plugin_64_bit_in_32_bit_mode_version -ne 0)  { $plugin_baseline = $plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
-If ($plugin_32_bit_version -ne 0)                 { $plugin_baseline = $plugin_32_bit_version }                  Else { $continue = $true }
-If ($plugin_64_bit_version -ne 0)                 { $plugin_baseline = $plugin_64_bit_version }                  Else { $continue = $true }
 
-If ($pepper_64_bit_in_32_bit_mode_version -ne 0)  { $pepper_baseline = $pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
-If ($pepper_32_bit_version -ne 0)                 { $pepper_baseline = $pepper_32_bit_version }                  Else { $continue = $true }
-If ($pepper_64_bit_version -ne 0)                 { $pepper_baseline = $pepper_64_bit_version }                  Else { $continue = $true }
+If ($plugin_64_bit_in_32_bit_mode_version -ne $null)  { $plugin_baseline = $plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($plugin_32_bit_version -ne $null)                 { $plugin_baseline = $plugin_32_bit_version }                  Else { $continue = $true }
+If ($plugin_64_bit_version -ne $null)                 { $plugin_baseline = $plugin_64_bit_version }                  Else { $continue = $true }
+
+If ($pepper_64_bit_in_32_bit_mode_version -ne $null)  { $pepper_baseline = $pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($pepper_32_bit_version -ne $null)                 { $pepper_baseline = $pepper_32_bit_version }                  Else { $continue = $true }
+If ($pepper_64_bit_version -ne $null)                 { $pepper_baseline = $pepper_64_bit_version }                  Else { $continue = $true }
 
 
 
@@ -326,7 +327,7 @@ If ($activex_is_installed -eq $true) {
         } # else
 
     } ElseIf ([System.Environment]::OSVersion.Version -ge '6.2') {
-        If ($most_recent_activex_already_exists) {
+        If ($xml_activex_win_current -eq $activex_baseline) {
             Write-Output "Currently (until the next Flash Player version is released) the ActiveX Adobe Flash Player for Internet Explorer and/or for Edge v$activex_baseline doesn't need any further maintenance or care."
             $empty_line | Out-String
         } Else {
@@ -563,7 +564,7 @@ If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::
 # Initiate the update process
 $empty_line | Out-String
 $timestamp = Get-Date -Format hh:mm:ss
-$update_text = "$timestamp - Initiating the Flash update procedure..."
+$update_text = "$timestamp - Initiating the Flash Update Protocol..."
 Write-Output $update_text
 
 # Determine the current directory                                                             # Credit: JaredPar and Matthew Pirocchi "What's the best way to determine the location of the current PowerShell script?"
@@ -1300,17 +1301,17 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 # Determine the new installed Flash version numbers regardles weather the system is 32- or 64-bits.
-If ($new_activex_64_bit_in_32_bit_mode_version -ne 0) { $new_activex_baseline = $new_activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
-If ($new_activex_32_bit_version -ne 0)                { $new_activex_baseline = $new_activex_32_bit_version }                Else { $continue = $true }
-If ($new_activex_64_bit_version -ne 0)                { $new_activex_baseline = $new_activex_64_bit_version }                Else { $continue = $true }
+If ($new_activex_64_bit_in_32_bit_mode_version -ne $null) { $new_activex_baseline = $new_activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
+If ($new_activex_32_bit_version -ne $null)                { $new_activex_baseline = $new_activex_32_bit_version }                Else { $continue = $true }
+If ($new_activex_64_bit_version -ne $null)                { $new_activex_baseline = $new_activex_64_bit_version }                Else { $continue = $true }
 
-If ($new_plugin_64_bit_in_32_bit_mode_version -ne 0)  { $new_plugin_baseline = $new_plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
-If ($new_plugin_32_bit_version -ne 0)                 { $new_plugin_baseline = $new_plugin_32_bit_version }                  Else { $continue = $true }
-If ($new_plugin_64_bit_version -ne 0)                 { $new_plugin_baseline = $new_plugin_64_bit_version }                  Else { $continue = $true }
+If ($new_plugin_64_bit_in_32_bit_mode_version -ne $null)  { $new_plugin_baseline = $new_plugin_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($new_plugin_32_bit_version -ne $null)                 { $new_plugin_baseline = $new_plugin_32_bit_version }                  Else { $continue = $true }
+If ($new_plugin_64_bit_version -ne $null)                 { $new_plugin_baseline = $new_plugin_64_bit_version }                  Else { $continue = $true }
 
-If ($new_pepper_64_bit_in_32_bit_mode_version -ne 0)  { $new_pepper_baseline = $new_pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
-If ($new_pepper_32_bit_version -ne 0)                 { $new_pepper_baseline = $new_pepper_32_bit_version }                  Else { $continue = $true }
-If ($new_pepper_64_bit_version -ne 0)                 { $new_pepper_baseline = $new_pepper_64_bit_version }                  Else { $continue = $true }
+If ($new_pepper_64_bit_in_32_bit_mode_version -ne $null)  { $new_pepper_baseline = $new_pepper_64_bit_in_32_bit_mode_version }   Else { $continue = $true }
+If ($new_pepper_32_bit_version -ne $null)                 { $new_pepper_baseline = $new_pepper_32_bit_version }                  Else { $continue = $true }
+If ($new_pepper_64_bit_version -ne $null)                 { $new_pepper_baseline = $new_pepper_64_bit_version }                  Else { $continue = $true }
 
 
 
@@ -1393,7 +1394,7 @@ If (($activex_is_installed -eq $true) -and ($downloading_activex_is_required -eq
             Write-Output "As deemed earlier, currently (until the next Flash Player version is released) Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit ActiveX."
             $empty_line | Out-String
     } ElseIf ([System.Environment]::OSVersion.Version -ge '6.2') {
-        If ($most_recent_activex_already_exists) {
+        If ($xml_activex_win_current -eq $activex_baseline) {
             $activex_ok = $true
             Write-Output "As deemed earlier, currently (until the next Flash Player version is released) the ActiveX Adobe Flash Player for Internet Explorer and/or for Edge v$activex_baseline doesn't need any further maintenance or care. This script didn't alter the $bit_number-bit ActiveX."
             $empty_line | Out-String
@@ -1630,7 +1631,11 @@ $runtime = ($end_time) - ($start_time)
 
 # Display the runtime in console
 $empty_line | Out-String
-$runtime_text = "The update took $runtime_result to complete."
+$timestamp_end = Get-Date -Format hh:mm:ss
+$end_text = "$timestamp_end - The Flash Update Protocol completed."
+Write-Output $end_text
+$empty_line | Out-String
+$runtime_text = "The update took $runtime_result."
 Write-Output $runtime_text
 $empty_line | Out-String
 
@@ -1826,7 +1831,7 @@ to C:\Temp, please, for example, follow the instructions at
 http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html
 
     Homepage:           https://github.com/auberginehill/update-adobe-flash-player
-    Version:            1.1
+    Version:            1.2
 
 .EXAMPLE
 ./Update-AdobeFlashPlayer
