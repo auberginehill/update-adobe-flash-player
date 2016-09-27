@@ -101,6 +101,13 @@
 
 
 
+### Screenshot
+
+<img class="screenshot" title="screenshot" alt="screenshot" height="100%" width="100%" src="https://raw.githubusercontent.com/auberginehilll/update-adobe-flash-player/master/Update-AdobeFlashPlayer.png">
+
+
+
+
 ### Outputs
 
 <table>
