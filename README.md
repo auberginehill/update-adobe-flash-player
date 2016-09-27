@@ -103,7 +103,7 @@
 
 ### Screenshot
 
-<img class="screenshot" title="screenshot" alt="screenshot" height="70%" width="70%" src="https://raw.githubusercontent.com/auberginehill/update-adobe-flash-player/master/Update-AdobeFlashPlayer.png">
+<img class="screenshot" title="screenshot" alt="screenshot" align="center" height="60%" width="60%" src="https://raw.githubusercontent.com/auberginehill/update-adobe-flash-player/master/Update-AdobeFlashPlayer.png">
 
 
 
