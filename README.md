@@ -103,9 +103,9 @@
 
 ### Screenshot
 
-<ol>
+<ol><ol>
 <img class="screenshot" title="screenshot" alt="screenshot" height="60%" width="60%" src="https://raw.githubusercontent.com/auberginehill/update-adobe-flash-player/master/Update-AdobeFlashPlayer.png">
-</ol>
+</ol></ol>
 
 
 
