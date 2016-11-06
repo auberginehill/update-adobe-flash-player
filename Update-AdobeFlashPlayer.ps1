@@ -35,7 +35,41 @@ For further info, for instance a command
 help ./Update-AdobeFlashPlayer -Full
 
 may be used at the PowerShell prompt window [PS>] in the folder, where the script is placed.
+
+
+
+
+https://forums.adobe.com/thread/2208103
+Alternatively, if you just want a notification when security updates become available 
+(and with a continuous, sustained investment in security hardening, that's pretty much every release), 
+you can subscribe to the Adobe Security Notification Service, 
+which sends out email alerts when security updates become available for our products.
+https://forums.adobe.com/thread/2208103
+
+
+
+
+Adobe Security Notification E-Mail Service Subscription Page:
+https://campaign.adobe.com/webApp/adbeSecurityNotificationsRegistration?id=0
+
+
+
+
+Adobe Flash Player Master Version XML file:
+http://fpdownload.macromedia.com/pub/flashplayer/masterversion/masterversion.xml
+
+
+
+
+Adobe Flash Player Administration Guide: 
+https://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html
+
+
+
+
 #>
+
+
 
 
 $path = $env:temp
@@ -256,9 +290,9 @@ catch [System.Net.WebException]
     $xml_ppapi_linuxchrome_current = ($xml_versions.version.release.PPAPI_linuxchrome.version).replace(",",".")
     $xml_ppapi_chromeos_current = ($xml_versions.version.release.PPAPI_chromeos.version).replace(",",".")
 
-    $xml_activex_win_extended = ($xml_versions.version.esr.ActiveX_win.version).replace(",",".")
-    $xml_plugin_win_extended = ($xml_versions.version.esr.NPAPI_win.version).replace(",",".")
-    $xml_plugin_mac_extended = ($xml_versions.version.esr.NPAPI_mac.version).replace(",",".")
+ #   $xml_activex_win_extended = ($xml_versions.version.esr.ActiveX_win.version).replace(",",".")
+ #   $xml_plugin_win_extended = ($xml_versions.version.esr.NPAPI_win.version).replace(",",".")
+ #   $xml_plugin_mac_extended = ($xml_versions.version.esr.NPAPI_mac.version).replace(",",".")
 
 
         $obj_most_recent += New-Object -TypeName PSCustomObject -Property @{
@@ -1118,13 +1152,13 @@ If ($bit_number -eq "32") {
     } # else
 
     $configuration_file_32_bit = New-Item -ItemType File -Path "$env:windir\System32\Macromed\Flash\mms.cfg" -Force
-    Add-Content $configuration_file_32_bit -Value 'AssetCacheSize = 0'
+ #   Add-Content $configuration_file_32_bit -Value 'AssetCacheSize = 0'
     Add-Content $configuration_file_32_bit -Value 'AutoUpdateDisable = 1'
     Add-Content $configuration_file_32_bit -Value 'LegacyDomainMatching = 0'
     Add-Content $configuration_file_32_bit -Value 'LocalFileLegacyAction = 0'
-    Add-Content $configuration_file_32_bit -Value 'LocalStorageLimit = 1'
+ #   Add-Content $configuration_file_32_bit -Value 'LocalStorageLimit = 1'
     Add-Content $configuration_file_32_bit -Value 'SilentAutoUpdateEnable = 0'
-    Add-Content $configuration_file_32_bit -Value 'ThirdPartyStorage = 0'
+ #   Add-Content $configuration_file_32_bit -Value 'ThirdPartyStorage = 0'
 
 } Else {
     $continue = $true
@@ -1146,13 +1180,13 @@ If ($bit_number -eq "64") {
     } # else
 
     $configuration_file_64_bit = New-Item -ItemType File -Path "$env:windir\SysWOW64\Macromed\Flash\mms.cfg" -Force
-    Add-Content $configuration_file_64_bit -Value 'AssetCacheSize = 0'
+ #   Add-Content $configuration_file_64_bit -Value 'AssetCacheSize = 0'
     Add-Content $configuration_file_64_bit -Value 'AutoUpdateDisable = 1'
     Add-Content $configuration_file_64_bit -Value 'LegacyDomainMatching = 0'
     Add-Content $configuration_file_64_bit -Value 'LocalFileLegacyAction = 0'
-    Add-Content $configuration_file_64_bit -Value 'LocalStorageLimit = 1'
+ #   Add-Content $configuration_file_64_bit -Value 'LocalStorageLimit = 1'
     Add-Content $configuration_file_64_bit -Value 'SilentAutoUpdateEnable = 0'
-    Add-Content $configuration_file_64_bit -Value 'ThirdPartyStorage = 0'
+ #   Add-Content $configuration_file_64_bit -Value 'ThirdPartyStorage = 0'
 
 } Else {
     $continue = $true
@@ -1761,16 +1795,20 @@ To see the actual values that are being written, please see Step 6 above (alteri
 the duplicated values below won't affect the script in any meaningful way) 
 
 
-    AssetCacheSize = 0          Disables storing the common Flash components 
+ #  [AssetCacheSize = 0         Disables storing the common Flash components] 
     AutoUpdateDisable = 1       Disables the Automatic Flash Update
     LegacyDomainMatching = 0    Denies Flash Player 6 and earlier superdomain rules
     LocalFileLegacyAction = 0   Denies Flash Player 7 and earlier local-trusted sandbox
-    LocalStorageLimit = 1       Disables persistent shared objects
+ #  [LocalStorageLimit = 1      Disables persistent shared objects]
     SilentAutoUpdateEnable = 0  Disables background updates
-    ThirdPartyStorage = 0       Denies third-party locally persistent shared objects
+ #  [ThirdPartyStorage = 0      Denies third-party locally persistent shared objects]
 
 
     Most of the settings above may render some web pages broken.
+
+    Lines marked with # are written only if the symbol # is removed from the 
+    beginning of the appropriate line inside the source code section (above the 
+    SYNOPSIS header, Step 6, about at line ~1111).  
 
 For a comprehensive list of available settings and a more detailed description 
 of the values above, please see the "Adobe Flash Player Administration Guide" at
@@ -1818,7 +1856,7 @@ from the Internet without prompting the end-user beforehand or without asking an
 confirmations (in Step 1 and Step 2).
 
 Please note that the downloaded files are temporarily placed in a directory, which 
-is specified with the $path variable (at line 41). The $env:temp variable points 
+is specified with the $path variable (at line 75). The $env:temp variable points 
 to the current temp folder. The default value of the $env:temp variable is 
 C:\Users\<username>\AppData\Local\Temp (i.e. each user account has their own 
 separate temp folder at path %USERPROFILE%\AppData\Local\Temp). To see the current 
@@ -1831,7 +1869,7 @@ to C:\Temp, please, for example, follow the instructions at
 http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html
 
     Homepage:           https://github.com/auberginehill/update-adobe-flash-player
-    Version:            1.2
+    Version:            1.3
 
 .EXAMPLE
 ./Update-AdobeFlashPlayer
