@@ -192,8 +192,8 @@
                                 <td style="padding:6px"><strong>Description</strong></td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code># AssetCacheSize = 0</code></td>
-                                <td style="padding:6px">Disables storing the common Flash components</td>
+                                <td style="padding:6px"><code># [AssetCacheSize = 0</code></td>
+                                <td style="padding:6px">Disables storing the common Flash components]</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>AutoUpdateDisable = 1</code></td>
@@ -208,16 +208,16 @@
                                 <td style="padding:6px">Denies Flash Player 7 and earlier local-trusted sandbox</td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code># LocalStorageLimit = 1</code></td>
-                                <td style="padding:6px">Disables persistent shared objects</td>
+                                <td style="padding:6px"><code># [LocalStorageLimit = 1</code></td>
+                                <td style="padding:6px">Disables persistent shared objects]</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>SilentAutoUpdateEnable = 0</code></td>
                                 <td style="padding:6px">Disables background updates</td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code># ThirdPartyStorage = 0</code></td>
-                                <td style="padding:6px">Denies third-party locally persistent shared objects</td>
+                                <td style="padding:6px"><code># [ThirdPartyStorage = 0</code></td>
+                                <td style="padding:6px">Denies third-party locally persistent shared objects]</td>
                             </tr>
                         </table>
                         <p>Most of the settings above may render some web pages broken.</p>
@@ -452,16 +452,12 @@
  <table>
     <tr>
         <th><img class="emoji" title="www" alt="www" height="28" width="28" align="absmiddle" src="https://assets-cdn.github.com/images/icons/emoji/unicode/0023-20e3.png"></th>
-        
-        <td style="padding:6px"><a href="https://github.com/auberginehill/firefox-customization-files">Firefox Customization Files</a></td> 
-    </tr>
-    <tr>
-        <th rowspan="12"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-ascii-table">Get-AsciiTable</a></td>
     </tr>
     <tr>
+        <th rowspan="12"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-battery-info">Get-BatteryInfo</a></td>
-    </tr>    
+    </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-computer-info">Get-ComputerInfo</a></td>
     </tr>
@@ -491,5 +487,8 @@
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/toss-a-coin">Toss-a-Coin</a></td>
+    </tr>
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">Update-AdobeFlashPlayer</a></td>
     </tr>
 </table>
