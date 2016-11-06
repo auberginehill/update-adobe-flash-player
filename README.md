@@ -43,7 +43,7 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Version:</strong></td>
-      <td style="padding:6px">1.2</td>
+      <td style="padding:6px">1.3</td>
    </tr>
    <tr>
         <td style="padding:6px"><strong>Sources:</strong></td>
@@ -192,35 +192,36 @@
                                 <td style="padding:6px"><strong>Description</strong></td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code>AssetCacheSize = 0</code></td>
-                                <td style="padding:6px">Disables storing the common Flash components</a></td>
+                                <td style="padding:6px"><code># AssetCacheSize = 0</code></td>
+                                <td style="padding:6px">Disables storing the common Flash components</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>AutoUpdateDisable = 1</code></td>
-                                <td style="padding:6px">Disables the Automatic Flash Update</a></td>
+                                <td style="padding:6px">Disables the Automatic Flash Update</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>LegacyDomainMatching = 0</code></td>
-                                <td style="padding:6px">Denies Flash Player 6 and earlier superdomain rules</a></td>
+                                <td style="padding:6px">Denies Flash Player 6 and earlier superdomain rules</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>LocalFileLegacyAction = 0</code></td>
-                                <td style="padding:6px">Denies Flash Player 7 and earlier local-trusted sandbox</a></td>
+                                <td style="padding:6px">Denies Flash Player 7 and earlier local-trusted sandbox</td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code>LocalStorageLimit = 1</code></td>
-                                <td style="padding:6px">Disables persistent shared objects</a></td>
+                                <td style="padding:6px"><code># LocalStorageLimit = 1</code></td>
+                                <td style="padding:6px">Disables persistent shared objects</td>
                             </tr>
                             <tr>
                                 <td style="padding:6px"><code>SilentAutoUpdateEnable = 0</code></td>
-                                <td style="padding:6px">Disables background updates</a></td>
+                                <td style="padding:6px">Disables background updates</td>
                             </tr>
                             <tr>
-                                <td style="padding:6px"><code>ThirdPartyStorage = 0</code></td>
-                                <td style="padding:6px">Denies third-party locally persistent shared objects</a></td>
+                                <td style="padding:6px"><code># ThirdPartyStorage = 0</code></td>
+                                <td style="padding:6px">Denies third-party locally persistent shared objects</td>
                             </tr>
                         </table>
                         <p>Most of the settings above may render some web pages broken.</p>
+                        <p>Lines marked with # are written only if the symbol # is removed from the beginning of the appropriate line inside the source code section (please see the Step 6 in the <a href="https://raw.githubusercontent.com/auberginehill/update-adobe-flash-player/master/Update-AdobeFlashPlayer.ps1">script</a> itself, about at line ~1111).</p>
                     </p>
                     <p>For a comprehensive list of available settings and a more detailed description of the values above, please see the <a href="http://www.adobe.com/devnet/flashplayer/articles/flash_player_admin_guide.html">Adobe Flash Player Administration Guide</a>.</p>
                 </ol>
