@@ -21,7 +21,7 @@ instance, the automatic Flash updates are turned off.
 If a working Internet connection is not found, Update-AdobeFlashPlayer will exit at 
 an early stage without displaying any info apart from what is found on the system. If 
 Update-AdobeFlashPlayer is run without elevated rights (but with a working Internet 
-connection), it will be shown, weather a Flash update is needed or not, but the script 
+connection), it will be shown, whether a Flash update is needed or not, but the script 
 will exit before actually downloading any files or making any changes to the system.
 
 The Flash Player ActiveX control on Windows 8.1 and above is a component of Internet 
@@ -79,7 +79,7 @@ $start_time = Get-Date
 $empty_line = ""
 
 
-# Function to check weather a program is installed or not                                     # Credit: chocolatey: "Flash Player Plugin"
+# Function to check whether a program is installed or not                                     # Credit: chocolatey: "Flash Player Plugin"
 Function Check-InstalledSoftware ($display_name, $display_version) {
     $registry_paths = @(
         'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
@@ -228,7 +228,7 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 
-# Determine the original installed Flash version numbers regardles weather the system is 32- or 64-bits.
+# Determine the original installed Flash version numbers regardles whether the system is 32- or 64-bits.
 If ($activex_64_bit_in_32_bit_mode_version -ne $null) { $activex_baseline = $activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
 If ($activex_32_bit_version -ne $null)                { $activex_baseline = $activex_32_bit_version }                Else { $continue = $true }
 If ($activex_64_bit_version -ne $null)                { $activex_baseline = $activex_64_bit_version }                Else { $continue = $true }
@@ -1341,7 +1341,7 @@ If ((Test-Path $env:windir\System32\Macromed\Flash\pepflashplayer32*.dll) -eq $t
 
 
 
-# Determine the new installed Flash version numbers regardles weather the system is 32- or 64-bits.
+# Determine the new installed Flash version numbers regardles whether the system is 32- or 64-bits.
 If ($new_activex_64_bit_in_32_bit_mode_version -ne $null) { $new_activex_baseline = $new_activex_64_bit_in_32_bit_mode_version } Else { $continue = $true }
 If ($new_activex_32_bit_version -ne $null)                { $new_activex_baseline = $new_activex_32_bit_version }                Else { $continue = $true }
 If ($new_activex_64_bit_version -ne $null)                { $new_activex_baseline = $new_activex_64_bit_version }                Else { $continue = $true }
@@ -1733,11 +1733,11 @@ Windows Update)).
 .DESCRIPTION
 Update-AdobeFlashPlayer downloads a list of the most recent Flash version numbers
 against which it compares the Flash version numbers found on the system and displays,
-weather a Flash update is needed or not. If a working Internet connection is not
+whether a Flash update is needed or not. If a working Internet connection is not
 found, Update-AdobeFlashPlayer will exit at an early stage without displaying any
 info apart from what is found on the system. The actual update process naturally
 needs elevated rights, but if, however, all detected Flash Players seem to be
-up-to-date, Update-AdobeFlashPlayer will exit before checking, weather it is run
+up-to-date, Update-AdobeFlashPlayer will exit before checking, whether it is run
 elevated or not. Thus, if Update-AdobeFlashPlayer is run in a up-to-date machine
 in a 'normal' PowerShell window, Update-AdobeFlashPlayer will just check that
 everything is OK and leave without further ceremony.
@@ -1880,6 +1880,7 @@ to C:\Temp, please, for example, follow the instructions at
 http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-location-windows.html
 
     Homepage:           https://github.com/auberginehill/update-adobe-flash-player
+    Short URL:          http://tinyurl.com/gve9y8s
     Version:            1.3
 
 .EXAMPLE
