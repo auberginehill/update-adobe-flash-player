@@ -346,6 +346,7 @@ $most_recent_plugin_major_version = ([version]$xml_plugin_win_current).Major
 $most_recent_pepper_major_version = ([version]$xml_ppapi_win_current).Major    
 
 $downloading_activex_is_required = $false
+$activex_exception = $false
 If ($activex_is_installed -eq $true) {
     $most_recent_activex_already_exists = Check-InstalledSoftware "Adobe Flash Player $most_recent_activex_major_version ActiveX" $xml_activex_win_current
     If ([System.Environment]::OSVersion.Version -lt '6.2') {
@@ -366,6 +367,7 @@ If ($activex_is_installed -eq $true) {
             $empty_line | Out-String
         } Else {
             $downloading_activex_is_required = $false
+            $activex_exception = $true
             Write-Warning "Please use Windows Update to update Adobe Flash Player(s) for Internet Explorer (ActiveX) and/or for Edge (ActiveX)."
             $empty_line | Out-String
             Write-Output "Adobe Flash Player for Internet Explorer (ActiveX) v$activex_baseline seems to be outdated. The most recent non-beta Flash version of ActiveX is v$xml_activex_win_current. The installed ActiveX Flash version v$activex_baseline needs to be updated. However, the Flash Player ActiveX control on Windows 8.1 and above is a component of Internet Explorer and Edge and is updated via Windows Update. By using the standalone Flash Player ActiveX installer, Flash Player ActiveX control cannot be installed on Windows 8.1 and above systems. Also, the Flash Player uninstaller doesn't uninstall the ActiveX control on Windows 8.1 and above systems. For updating the ActiveX Flash Player on Windows 8.1 and above systems, please use the Windows Update."
@@ -419,20 +421,22 @@ If ($pepper_is_installed -eq $true) {
 } # else
 
 
+
+
         $obj_downloading += New-Object -TypeName PSCustomObject -Property @{
-            'Adobe Flash Player for Internet Explorer (ActiveX)'                = If ($activex_is_installed -eq $true) { $downloading_activex_is_required } Else { "-" }
+            'Adobe Flash Player for Internet Explorer (ActiveX)'                = If ($activex_exception -eq $true) { "True: Please use Windows Update to update Flash" } ElseIf ($activex_is_installed -eq $true) { $downloading_activex_is_required } Else { "-" }
             'Adobe Flash Player for Firefox (NPAPI)'                            = If ($plugin_is_installed -eq $true) { $downloading_plugin_is_required } Else { "-" }
             'Adobe Flash Player for Opera and Chromium-based browsers (PPAPI)'  = If ($pepper_is_installed -eq $true) { $downloading_pepper_is_required } Else { "-" }
         } # New-Object
-    $obj_downloading.PSObject.TypeNames.Insert(0,"Updating Is Required for These Flash Versions")
+    $obj_downloading.PSObject.TypeNames.Insert(0,"Maintenance Is Required for These Flash Versions")
     $obj_downloading_selection = $obj_downloading | Select-Object 'Adobe Flash Player for Internet Explorer (ActiveX)','Adobe Flash Player for Firefox (NPAPI)','Adobe Flash Player for Opera and Chromium-based browsers (PPAPI)'
 
 
     # Display in console which installers for Flash Player need to be downloaded
     $empty_line | Out-String
     $empty_line | Out-String
-    $header_downloading = "Updating Is Required for the Following Flash Versions"
-    $coline_downloading = "-----------------------------------------------------"
+    $header_downloading = "Maintenance Is Required for the Following Flash Versions"
+    $coline_downloading = "--------------------------------------------------------"
     Write-Output $header_downloading
     $coline_downloading | Out-String
     $obj_downloading_selection
@@ -443,7 +447,10 @@ If ($pepper_is_installed -eq $true) {
 
 # Determine if there is a real need to carry on with the rest of the script.
 If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or ($pepper_is_installed -eq $true)) {
-    If (($downloading_activex_is_required -eq $false) -and ($downloading_plugin_is_required -eq $false) -and ($downloading_pepper_is_required -eq $false)) {
+
+    If (($downloading_activex_is_required -eq $false) -and ($downloading_plugin_is_required -eq $false) -and ($downloading_pepper_is_required -eq $false) -and ($activex_exception -eq $true)) {
+        Return "Please use Windows Update to update the ActiveX-version of Adobe Flash Player."
+    } ElseIf (($downloading_activex_is_required -eq $false) -and ($downloading_plugin_is_required -eq $false) -and ($downloading_pepper_is_required -eq $false)) {
         Return "The installed Flash seems to be OK."
     } Else {
         $continue = $true
@@ -1501,7 +1508,11 @@ If (($pepper_is_installed -eq $true) -and ($downloading_pepper_is_required -eq $
 
 # Determine the current status of Flash and find out if the script should stop or not
 If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or ($pepper_is_installed -eq $true)) {
-    If (($success_activex -ne $false) -and ($success_plugin -ne $false) -and ($success_pepper -ne $false) -and ($activex_ok -ne $false)) {
+
+    If (($success_activex -ne $false) -and ($success_plugin -ne $false) -and ($success_pepper -ne $false) -and ($activex_ok -ne $false) -and ($activex_exception -eq $true)) {
+        Write-Output "Please use Windows Update to update the ActiveX-version of Adobe Flash Player."
+        $continue = $true
+    } ElseIf (($success_activex -ne $false) -and ($success_plugin -ne $false) -and ($success_pepper -ne $false) -and ($activex_ok -ne $false)) {
         Write-Output "The installed Flash seems to be OK."
         $continue = $true
     } Else {
@@ -1655,12 +1666,12 @@ $runtime = ($end_time) - ($start_time)
         $runtime_result = [string]''
     } # else (if)
 
-        If ($runtime_result.Contains("0 h")) {
-            $runtime_result = $runtime_result.Replace("0 h","")
-            } If ($runtime_result.Contains("0 min")) {
-                $runtime_result = $runtime_result.Replace("0 min","")
-                } If ($runtime_result.Contains("0 sec")) {
-                $runtime_result = $runtime_result.Replace("0 sec","")
+        If ($runtime_result.Contains(" 0 h")) {
+            $runtime_result = $runtime_result.Replace(" 0 h"," ")
+            } If ($runtime_result.Contains(" 0 min")) {
+                $runtime_result = $runtime_result.Replace(" 0 min"," ")
+                } If ($runtime_result.Contains(" 0 sec")) {
+                $runtime_result = $runtime_result.Replace(" 0 sec"," ")
         } # if ($runtime_result: first)
 
 # Display the runtime in console
