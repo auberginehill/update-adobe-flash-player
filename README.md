@@ -41,7 +41,8 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Homepage:</strong></td>
-      <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">https://github.com/auberginehill/update-adobe-flash-player</a></td>
+      <td style="padding:6px"><a href="https://github.com/auberginehill/update-adobe-flash-player">https://github.com/auberginehill/update-adobe-flash-player</a>
+      <br />Short URL: <a href="http://tinyurl.com/gve9y8s">http://tinyurl.com/gve9y8s</a></td>
    </tr>
    <tr>
       <td style="padding:6px"><strong>Version:</strong></td>
@@ -53,7 +54,7 @@
             <table>
                 <tr>
                     <td style="padding:6px">Emojis:</td>
-                    <td style="padding:6px"><a href="https://api.github.com/emojis">https://api.github.com/emojis</a></td>
+                    <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
                 </tr>
                 <tr>
                     <td style="padding:6px">Bob Ross:</td>
