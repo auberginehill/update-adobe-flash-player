@@ -1,6 +1,8 @@
 <!-- Visual Studio Code: For a more comfortable reading experience, use the key combination Ctrl + Shift + V
-     Visual Studio Code: To crop the tailing end space characters out, please use the key combination Ctrl + Shift + X
+     Visual Studio Code: To crop the tailing end space characters out, please use the key combination Ctrl + A Ctrl + K Ctrl + X (Formerly Ctrl + Shift + X)
      Visual Studio Code: To improve the formatting of HTML code, press Shift + Alt + F and the selected area will be reformatted in a html file.
+     Visual Studio Code shortcuts: http://code.visualstudio.com/docs/customization/keybindings (or https://aka.ms/vscodekeybindings)
+     Visual Studio Code shortcut PDF (Windows): https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
 
   _    _           _       _                        _       _          ______ _           _     _____  _
  | |  | |         | |     | |              /\      | |     | |        |  ____| |         | |   |  __ \| |
@@ -29,7 +31,7 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Description:</strong></td>
-      <td style="padding:6px">Update-AdobeFlashPlayer downloads a list of the most recent Flash version numbers against which it compares the Flash version numbers found on the system and displays, weather a Flash update is needed or not. If a working Internet connection is not found, Update-AdobeFlashPlayer will exit at an early stage without displaying any info apart from what is found on the system. The actual update process naturally needs elevated rights, but if, however, all detected Flash Players seem to be up-to-date, Update-AdobeFlashPlayer will exit before checking, weather it is run elevated or not. Thus, if Update-AdobeFlashPlayer is run in a up-to-date machine in a "normal" PowerShell window, Update-AdobeFlashPlayer will just check that everything is OK and leave without further ceremony.
+      <td style="padding:6px">Update-AdobeFlashPlayer downloads a list of the most recent Flash version numbers against which it compares the Flash version numbers found on the system and displays, whether a Flash update is needed or not. If a working Internet connection is not found, Update-AdobeFlashPlayer will exit at an early stage without displaying any info apart from what is found on the system. The actual update process naturally needs elevated rights, but if, however, all detected Flash Players seem to be up-to-date, Update-AdobeFlashPlayer will exit before checking, whether it is run elevated or not. Thus, if Update-AdobeFlashPlayer is run in a up-to-date machine in a "normal" PowerShell window, Update-AdobeFlashPlayer will just check that everything is OK and leave without further ceremony.
       <br />
       <br />If Update-AdobeFlashPlayer is run without elevated rights (but with a working Internet connection) in a machine with old Flash versions, it will be shown that a Flash update is needed, but Update-AdobeFlashPlayer will exit with a fail before actually downloading any files or making any changes to the system. To perform an update with Update-AdobeFlashPlayer, PowerShell has to be run in an elevated window (run as an administrator).
       <br />
@@ -43,7 +45,7 @@
    </tr>
    <tr>
       <td style="padding:6px"><strong>Version:</strong></td>
-      <td style="padding:6px">1.3</td>
+      <td style="padding:6px">1.4</td>
    </tr>
    <tr>
         <td style="padding:6px"><strong>Sources:</strong></td>
@@ -455,12 +457,12 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/firefox-customization-files">Firefox Customization Files</a></td>
     </tr>
     <tr>
-        <th rowspan="12"></th>
+        <th rowspan="14"></th>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-ascii-table">Get-AsciiTable</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-battery-info">Get-BatteryInfo</a></td>
-    </tr>
+    </tr>    
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-computer-info">Get-ComputerInfo</a></td>
     </tr>    
@@ -486,9 +488,16 @@
         <td style="padding:6px"><a href="https://github.com/auberginehill/get-unused-drive-letters">Get-UnusedDriveLetters</a></td>
     </tr>
     <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/emoji-table">Emoji Table</a></td>
+    </tr>    
+    <tr>
+        <td style="padding:6px"><a href="https://github.com/auberginehill/java-update">Java-Update</a></td>
+    </tr>
+    <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/rock-paper-scissors">Rock-Paper-Scissors</a></td>
     </tr>
     <tr>
         <td style="padding:6px"><a href="https://github.com/auberginehill/toss-a-coin">Toss-a-Coin</a></td>
-    </tr>
+    </tr>  
 </table>
+
