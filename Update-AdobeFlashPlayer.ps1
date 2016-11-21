@@ -1881,7 +1881,7 @@ http://www.eightforums.com/tutorials/23500-temporary-files-folder-change-locatio
 
     Homepage:           https://github.com/auberginehill/update-adobe-flash-player
     Short URL:          http://tinyurl.com/gve9y8s
-    Version:            1.4
+    Version:            1.3
 
 .EXAMPLE
 ./Update-AdobeFlashPlayer
