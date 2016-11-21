@@ -79,30 +79,33 @@ $start_time = Get-Date
 $empty_line = ""
 
 
-# Function to check whether a program is installed or not                                     # Credit: chocolatey: "Flash Player Plugin"
-Function Check-InstalledSoftware ($display_name, $display_version) {
-    $registry_paths = @(
-        'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
-        'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*'
-    )
-    Return Get-ItemProperty $registry_paths -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $display_name -and $_.DisplayVersion -eq $display_version }
-} # function
-
-
 # Determine the architecture of a machine                                                     # Credit: Tobias Weltner: "PowerTips Monthly vol 8 January 2014"
 If ([IntPtr]::Size -eq 8) {
     $empty_line | Out-String
     "Running in a 64-bit subsystem" | Out-String
     $64 = $true
     $bit_number = "64"
+    $registry_paths = @(
+        'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
+        'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*'
+    )
     $empty_line | Out-String
 } Else {
     $empty_line | Out-String
     "Running in a 32-bit subsystem" | Out-String
     $64 = $false
     $bit_number = "32"
+    $registry_paths = @(
+        'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*'
+    )    
     $empty_line | Out-String
 } # else
+
+
+# Function to check whether a program is installed or not                                     # Credit: chocolatey: "Flash Player Plugin"
+Function Check-InstalledSoftware ($display_name, $display_version) {
+    Return Get-ItemProperty $registry_paths -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $display_name -and $_.DisplayVersion -eq $display_version }
+} # function
 
 
 # Try to find out which Flash versions, if any, are installed on the system
