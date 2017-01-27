@@ -483,6 +483,7 @@ If (($activex_is_installed -eq $true) -or ($plugin_is_installed -eq $true) -or (
     If (([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator") -eq $true) {
         $empty_line | Out-String
         Write-Verbose "Welcome to the Admin Corner." -verbose
+        $admin_corner = $true
         $title_1 = "Install Flash (Step 1/2)"        
         $message_1 = "Would you like to install one of the Flash versions (ActiveX, NPAPI or PPAPI) with this script?"
         
@@ -1158,7 +1159,11 @@ If ($bit_number -eq "32") {
         copy $env:windir\System32\Macromed\Flash\mms.cfg $env:windir\System32\Macromed\Flash\mms_backup.cfg
     } Else {
         # If an "original" version of this file does not exist, create it (practically when an update is attempted with this script for the first time)
-        copy $env:windir\System32\Macromed\Flash\mms.cfg $env:windir\System32\Macromed\Flash\mms_original.cfg
+        If ($admin_corner -eq $true) {
+            $continue = $true           
+        } Else {
+            copy $env:windir\System32\Macromed\Flash\mms.cfg $env:windir\System32\Macromed\Flash\mms_original.cfg        
+        } # else
     } # else
 
     $configuration_file_32_bit = New-Item -ItemType File -Path "$env:windir\System32\Macromed\Flash\mms.cfg" -Force
@@ -1186,7 +1191,12 @@ If ($bit_number -eq "64") {
         copy $env:windir\SysWOW64\Macromed\Flash\mms.cfg $env:windir\SysWOW64\Macromed\Flash\mms_backup.cfg
     } Else {
         # If an "original" version of this file does not exist, create it (practically when an update is attempted with this script for the first time)
-        copy $env:windir\SysWOW64\Macromed\Flash\mms.cfg $env:windir\SysWOW64\Macromed\Flash\mms_original.cfg
+        If ($admin_corner -eq $true) {
+            $continue = $true           
+        } Else {
+            copy $env:windir\SysWOW64\Macromed\Flash\mms.cfg $env:windir\SysWOW64\Macromed\Flash\mms_original.cfg             
+        } # else
+
     } # else
 
     $configuration_file_64_bit = New-Item -ItemType File -Path "$env:windir\SysWOW64\Macromed\Flash\mms.cfg" -Force
